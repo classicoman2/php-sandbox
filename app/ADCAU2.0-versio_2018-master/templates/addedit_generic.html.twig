@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/addedit.css"/>
+
+    <div id="back">
+        <a href="main.php?pg=mant&amp;id=0&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name_f}}&amp;desc={{desc_f}}">Enrere</a>
+    </div>
+    <div class="subs_container">
+        <div class="subleft">
+            <table class="addedittable"> 
+                <thead>
+                    <tr><td class="title" colspan="2">{{pageName}}</td></tr>
+                </thead>
+                <tbody>
+{% for row in fieldsOfForm %}
+                    <tr>
+                        <td class="label">{{row.label}}</td>
+                        <td class="inputField">{{row.field|raw}}</td>
+                    </tr>
+{% endfor %}
+                    <tr>
+                        <td></td>
+                        <td class="buttons">
+                            {% if (not id) %}
+                                <button class="form" id="btnCreate">Crear</button>
+                            {% else %}
+                                <button class="form" id="btnUpdate">Guardar</button>
+                            {% endif %}                        
+                            <button class="form" id="btnOneMore"> Una més </button>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div id="updating"><p>Actualitzant...</p></div>            
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        <script src="js/addedit.js"></script>
+    {% endblock %}
+<script>
+    // Create
+    $("#btnCreate").click( function() {
+        loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key=0','{{tableCols}}');
+    });
+    // Update
+    $("#btnUpdate").click( function() {
+        loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key={{id}}','{{tableCols}}');
+    });
+    
+    //Obrir una altra finestra d'Alta
+    $("#btnOneMore").click( function() {
+        window.open('main.php?pg=addedit&id=0&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name_f}}&amp;desc={{desc_f}}');
+    });
+</script>
+
+{% endblock %}

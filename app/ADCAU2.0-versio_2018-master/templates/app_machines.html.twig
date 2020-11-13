@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+    <link rel="stylesheet" href="css/licenses.css"/>
+
+    <p>
+        <a href='main.php?pg=mant&amp;tb=apps&amp;mode={{mode}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;model={{model}}&amp;location={{location}}&amp;name={{name_f}}&amp;tm={{tm}}'> Enrere </a>
+    </p>
+
+    <div id="title_lic">Màquines on està instal·lat {{appName}}</div>
+    <div id="licenses_list">
+            <table class="listing">
+                <thead>
+                    <tr>
+                        <th class="header">#</th>
+                        <th class="header">Ordinador</th>
+                        <th class="header">Instal·lat?</th>
+                        <th class="header">Data Instal·lació</th>
+                        <th class="header">Comentaris</th>
+                        <th></th><th></th>
+                    </tr>
+                </thead>	
+                <tbody>
+            {% for fila in files %}           
+                    <tr id="{{fila.appid}}">
+                        <td class="checkbox">
+                            <input type="checkbox" name="check_list[]" value="{{fila.machineid}}"/>
+                            {{loop.index}}
+                        </td>
+                        <td class="name">{{fila.machinename}}</td>
+                        <td class="installed centered">{{fila.inst}}</td>
+                        <td class="date centered">{{fila.date}}</td>
+                        <td class="comment">{{fila.comm}}</td>
+                    </tr>
+            {% endfor %}         
+                </tbody>
+            </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{# Pinta tots els tags #}
+
+{% for row in alltags %} 
+    <a onclick="loadXMLDoc('issue_tags_selected',
+                           'main.php?pg=ajax&file=issue_tags_selectedX&issue={{issue}}&tag={{row.id}}&op=ADD');"
+       id="row.id" title="Select Tag" href="#" >{{row.id}}
+    </a>
+{% endfor %}

@@ -1,0 +1,98 @@
+<div id="listing_header">
+    <div id="pageName">
+{{ ( (state==0) ? "<i>Borradors</i>" : ( (state==1) ? "<i>Obertes</i>" : "<i>Tancades</i>" )  ) }}       
+    </div>
+    <div id="row_navigator">
+        <div id="prev_and_next">
+        <!-- First MAX_ROWS registers --> 
+            <div id="first_registers" onmouseover="" style="cursor: pointer;" class="{{ (first!=0) ? 'active' : 'disabled' }}"
+                 onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&amp;order={{order}}&amp;first=0&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}';">
+            Principi</div>              
+            <div id="prev_registers" onmouseover="" style="cursor: pointer;" class="{{ (first!=0) ? 'active' : 'disabled' }}" 
+                  onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first-max}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}';">
+            Previs</div>
+            <!-- Next MAX_ROWS registers --> 
+            <div id="next_registers" onmouseover="" style="cursor: pointer;" class="{{ ((first + max) < totalFiles ) ? 'active' : 'disabled' }}"
+                   onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first+max}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}'; ">
+            Pròxs.</div>
+        </div>
+        <div id="num_of_rows">{{totalFiles}} files</div>
+    </div>
+    <div class="count_registers">
+        <select id="max">
+            <option value="5"  {{ (max==5) ? "selected=\"selected\"" : "" }}>5</option>
+            <option value="10" {{ (max==10) ? "selected=\"selected\"" : "" }}>10</option>
+            <option value="15" {{ (max==15) ? "selected=\"selected\"" : "" }}>15</option>
+            <option value="20" {{ (max==20) ? "selected=\"selected\"" : "" }}>20</option>
+        </select>
+    </div>
+</div>
+
+
+<!-- PRINT FORM AND ROWS -->
+
+<form enctype="multipart/form-data" id="listForm" method="post"
+      action="controllers/_functs.php?f=delN&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first+max}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}">
+    <table class="listing">
+        <thead>
+          <tr>
+                <th colspan="2"></th>
+{% for field in fieldsToShow %}      
+                <th class="header">
+                   <a href="./main.php?pg=mant&amp;tb={{tb}}&amp;order={{field}}&amp;first={{first+max}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}">
+                      {{field}}
+                   </a>
+                </th>
+{% endfor %}
+                <th class="header">Màquines</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>  
+        
+<!-- PRINT ROWS -->
+
+        <tbody>
+{% for row in rows %}   
+            <tr class="{{ (row.bool_checked==0) ? 'fila_bold' }}">
+                <td class='numeracio'> {{first + loop.index}} </td>
+                <td class="checkbox">
+                  <!-- 'name' property used for the form, 'id' property used for javascript -->
+                  <input type="checkbox" name="check_list[]" 
+                         id="check_list{{loop.index0}}" 
+                         value={{row.id}}/>
+                </td>
+                
+        <!-- PRINT ONE ROW  -->
+        
+    {% for field in fieldsToShow %} 
+        {% if field=="fkey_prioritat" %}
+                <td class="short {{(row.fkey_prioritat|slice(1,6)=="Urgent") ? "red" : "" }}">
+                    {{row.fkey_prioritat}}
+                </td>
+        {% else %}
+                <td class="{{fieldsClasses[field]}}">
+                    {{row[field]}}
+                </td>
+        {% endif %}
+    {% endfor %}
+          
+                <td> {{machines[loop.index0]}} </td>
+                
+                <!--  EDIT issue -->  
+                <td class="edit">
+                    <a href="main.php?pg=addedit&amp;tb={{tb}}&amp;id={{row.id}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}">
+                      <img src="images/edit.jpg" alt="Edit Register"/>
+                    </a>
+                </td>
+                <!--  DELETE issue  -->
+                <td class="delete">
+                    <a href="controllers/_functs.php?f=del&amp;tb={{tb}}&amp;id={{row.id}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name}}&amp;desc={{desc}}&amp;state={{state}}" 
+                       onclick="return confirm('Segur que voleu eliminar aquesta incidència?');">
+                        <img src='images/delete.gif' alt='Edit Register'/>
+                    </a>
+                </td>
+            </tr>
+{% endfor %}
+        </tbody>        
+    </table>
+</form>

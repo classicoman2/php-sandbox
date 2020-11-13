@@ -1,0 +1,154 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/addedit.css"/>
+    
+    <div id="back">
+        <a href="main.php?pg=mant&amp;id=0&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name_f}}&amp;model={{model_f}}&amp;location={{location_f}}&amp;tm={{tm_f}}">Enrere</a>
+    </div>
+    <div class="subleft">
+        <table class="addedittable">
+           <thead>
+               <tr>
+                   <td class="title" colspan="4">{{pageName}}</td>
+               </tr>
+           </thead>
+    {% if (not id) %}
+            <tr>
+                <td class="label">Id:</td>
+                <td class="inputField">
+                    <input type="text" id="id" autofocus="autofocus" value=''>
+                </td>
+            </tr>
+    {% endif %}
+            <tr>
+                <td class="label"> Nom: </td>
+                <td class="inputField">
+                    <input type="text" 
+                           id="name" {{ (id==0) ? "" : " autofocus=\"autofocus\" " }}
+                           value="{{row.name}}">
+                </td>
+            </tr>
+           <tr>
+                <td class="label"> Type:</td>
+                <td class="inputField" colspan="3">
+                    {# És un listbox #}
+                    {{row.fkey_type_machine|raw}}         	              	              
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Model:</td>
+                <td class="inputField">           
+                    {# És un listbox #}
+                    {{row.fkey_model|raw}}         	              	              
+                </td>
+            </tr>       
+            <tr>
+                <td class="label">Location:</td>
+                <td class="inputField">           
+                    {# És un listbox #}
+                    {{row.fkey_location|raw}}         	              	              
+                </td>
+            </tr>       
+            <tr> 
+                <td class="label">Description:</td>
+                <td class="inputField">
+                    <textarea id="description" class="desc">{{row.description}}</textarea>
+                </td>
+            </tr>         
+            <tr>
+                <td class="label">Data Inventory:</td>
+                <td class="inputField">
+                    <input type="text" id="date_inventory" class="date"
+                           value="{{row.date_inventory}}"/>
+               </td>
+            </tr>
+            <tr>
+                <td class="label">S/N:</td>
+                <td class="inputField">
+                    <input type="text" id="serial_number" maxlength="18" value="{{row.serial_number}}"/>         	              	              
+                </td>
+            </tr>
+            <tr>
+                <td class="label">IP:</td>
+                <td class="inputField">
+                    <input class="short" type="text" maxlength="3" id="IP" value="{{row.IP}}"/>
+                </td>
+            </tr>  
+    {% if ( (tm_f=="PC") or (tm_f=="PO") or (tm_f=="") ) %}
+            <tr>
+                <td class="label">RAM memory:</td>
+                <td class="inputField">
+                    <input type="text" id="RAM" class="short" value="{{row.RAM}}"> GB
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Processor:</td>
+                <td class="inputField">
+                    {# És un listbox #}
+                    {{row.fkey_processor|raw}}
+                </td>
+            </tr>    
+            <tr>
+                <td class="label">Board:</td>
+                <td class="inputField">
+                    {# És un listbox #}
+                    {{row.fkey_board|raw}}
+                </td>
+            </tr>       
+            <tr>
+                <td class="label">Graphic:</td>
+                <td class="inputField">
+                    {# És un listbox #}
+                    {{row.fkey_graphic|raw}}
+                </td>
+            </tr> 
+            <tr>
+                <td class="label">Windows key:</td>
+                <td class="inputField">
+                    <input type="text" id="windows_key" value="{{row.windows_key}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">OS:</td>
+                <td class="inputField">
+                    {# És un listbox #}
+                    {{row.fkey_os|raw}}
+                </td>
+            </tr>
+    {% endif %}
+            <tr><td class="buttons" colspan="2">
+                {% if (id) %}
+                    <button class="form" id="btnUpdate">Guardar</button>
+                {% else %}
+                    <button class="form" id="btnCreate">Crear</button>
+                {% endif %}
+                <!--  Add One More  -->
+                <button class="form" id="btnOneMore">Una més</button>         
+            </td></tr>
+        </table>
+        
+        <div id="updating"><p>Actualitzant...</p></div>
+    </div>
+
+
+    {% block javascripts %}
+        <script src="js/addedit.js"></script>
+    {% endblock %}
+    <script>
+        //Create
+        $('#btnCreate').click( function() {
+            loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key=0','{{tableCols}}'); 
+        });
+        //
+        //Update
+        $('#btnUpdate').click( function() {
+            loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key={{id}}','{{tableCols}}'); 
+        });
+
+        //One More
+        $('#btnOneMore').click( function() {
+            window.location='main.php?pg=addedit&id=0&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&amp;model={{model_f}}&amp;location={{location_f}}&amp;tm={{tm_f}}'; 
+        });
+    </script>
+{% endblock %}

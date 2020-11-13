@@ -14,7 +14,7 @@ docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804
 
 # docker ps -a
 
-he trobat que la imatge se diu `happy cerf`
+he trobat que la imatge se diu `priceless_sanderson`
 
 Dades:
 

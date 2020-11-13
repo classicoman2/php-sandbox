@@ -1,0 +1,111 @@
+body, p, input, textarea {
+    font-family: Verdana;
+    color: #1F2126;
+}
+body {
+    background-color: #fff;
+    font-size: 13px;
+}
+
+a {
+    color: #0074a0;
+}
+a:hover {
+    font-weight: bold;
+}
+
+#all {
+    min-width: 970px; 
+    max-width: 1050px;
+    /* Amb aquests valors de marge, me queda centrat (perquè?) xtoni */
+    margin: 0 auto;
+    
+    border-radius: 5px;
+}
+
+#bodydoc{
+
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-bottom: 20px;
+     
+    overflow: hidden;  /* To keep footer on the bottom */
+    
+    background-color: #BFBFBF;
+}
+#header {
+    position:relative;
+
+    height:60px;
+    width:100%;
+    vertical-align:top;
+
+    font-size: 32px;
+    text-align:center;
+
+    padding-top:5px;
+}	
+    #logout {
+        text-align: right;
+        font-size: 12px;
+        padding-right: 20px;
+    }
+#body {
+    position:relative;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+    #left {
+        float:left;
+        position:relative;
+        font-size:14px;	 
+        width:50px;	 
+    }
+
+    #right {
+        text-align:left;
+        /*float:right;*/
+        position:relative;
+        overflow: hidden;
+
+        margin-left:60px;
+
+        padding-bottom:100px;   /* Height of the footer  +  10px */ 
+    }
+
+        #error_or_message {
+            min-height: 12px;
+        }
+
+/* This is necessary to avoid IExplorer to show a dull & thick blue img border */
+img {  border:0;  }
+
+
+#footer {
+    text-align: center;
+    position:relative;
+    bottom:0px;	
+    width:100%;
+    height:80px;
+    padding-top: 10px;                
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    padding: 2px 7px 2px 7px;
+}
+
+select.selectLB {
+    font-size: 1.05em;
+}
+
+/* Eliminar cantó a <img> amb un enllaç <a> IE */
+a img {
+    border:none;
+}

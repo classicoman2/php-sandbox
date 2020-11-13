@@ -1,0 +1,312 @@
+    fieldset#toolbar {  
+    min-height: 35px;
+    
+    background-color: #D5D5D5;
+    
+    border:1px solid #AAA;
+    border-radius:8px;
+    
+    margin: 3px 4px 0px 4px;
+    padding: 0px 5px 0px 5px;    
+}
+#toolbar_div {
+    width: 100%;
+}
+#listing_header {
+    height: 25px;
+    width: auto;
+    margin: 5px 5px 0 5px;
+    padding: 4px 10px 0 10px;
+    background-color: #F4F4F4;
+    border-radius: 5px 5px 0 0;
+}
+#pageName {
+    width: 200px;
+    float: left;
+    font-size: 1.3em;
+    padding-left: 20px;
+}
+#row_navigator {
+    width: auto;
+    float:left;
+    padding-left: 200px;
+}
+
+/* Next Registers */
+
+#prev_and_next {
+    float: left;
+    font-size: 12px;
+    margin:0 auto;
+    padding:0;
+}
+#prev_and_next > div > a > span {
+    margin-bottom: 5px;
+}
+
+#first_registers, #prev_registers, #next_registers {
+    height: 20px;
+    float:left;
+    background-repeat: no-repeat;
+    font-size: 0.8em;
+}
+#first_registers {
+    width: 50px;
+    padding-left: 25px;
+    background: url("../images/btn_first.png") left no-repeat;
+}
+#prev_registers {
+    width: 50px;
+    background: url("../images/btn_prev.png") left no-repeat;
+    padding-left: 25px;
+}
+#next_registers {
+    width: 55px;
+    background: url("../images/btn_next.png") right no-repeat;
+    text-align: left;
+}
+.active {
+    color: #0074a0;
+}
+.active:hover {
+    font-weight: bold;
+}
+.disabled {
+    pointer-events: none;
+}
+
+#num_of_rows {
+    float:left;
+    padding-left: 20px;
+}
+
+.count_registers {
+    width: 50px;    
+    float:left;
+    padding-left: 20px;
+}
+
+
+/* Toolbar */
+
+table.toolbar {
+    height: 55px;
+    width: auto;
+    padding: 1px;
+    font-size: 0.8em;
+}
+table.toolbar #title {
+    width: 120px;
+    font-size: 2em;
+    background-color: #D5D5D5;
+}
+/*Cells used as Title*/
+table.toolbar th.header { 
+    text-align: center;
+    background-color:#96BBD2;
+    color: #EEEEEE;
+}
+table.toolbar tbody { 
+    width: auto; 
+}
+table.toolbar tr { 
+    text-align: left;
+}
+table.toolbar td.label {
+    font-size: 0.9em;
+}
+table.toolbar td.label { 
+    width: 50px;
+    font-size: 13px;
+    text-align: right;
+    font-weight: bold;
+}
+table.toolbar td.title { 
+    font-weight: bold;
+    font-size: 1.6em;
+    text-align: left;
+}
+table.toolbar td.filter_chb { 
+    font-size: 10px;
+    background-color: #ffffff;
+    padding: 1px;
+}
+
+/* Files de les incidències encara no checkejades */
+tr.fila_bold {
+    font-weight: bold;
+}
+
+
+  
+
+
+#div_rows { 
+    margin: 5px 5px 15px 5px;
+    padding-bottom: 24px;
+    border:1px solid #AAA;
+    border-radius: 10px;
+    background-color: #D5D5D5;
+}
+
+/* Taula llistat */
+
+table.listing {
+    /*width: 100%;   */     /* The table will occupy the full horizontal space */
+    padding: 5px;
+    font-size: 0.9em;
+}
+ 
+/* The cells with the edit and delete buttons */
+.edit, .delete {
+    width: 35px;
+}
+.edit > a:hover > img, .delete > a:hover > img {
+    opacity: 0.5;
+}
+
+table.listing td {
+    padding: 3px;
+    background-color: #F4F4F4;
+    border-bottom-style: solid;
+    border-bottom-color: #ffffff;
+    border-bottom-width: 1px;
+    font-size: 0.7em;
+}
+/*  fields are wider */
+table.listing td.description { width: 350px;
+                               font-size: 0.8em; }
+/*Cells used to show data*/
+table.listing td.data { 
+    width: 250px;
+    font-size: 0.9em;
+}
+table.listing td.date { 
+    width: 110px;
+    font-size: 0.9em;
+}
+table.listing td.short { 
+    width: 100px;
+    font-size: 0.9em;
+}
+table.listing td.red { 
+    color: red;
+    font-weight: bold;
+}
+
+
+/*Cells used to show data*/
+table.listing td.numeracio { 
+    text-align: right;
+}
+table.listing td.checkbox { 
+    background-color:#9b9fa0;
+    font-size: 0.7em;
+}
+table.listing th.header {
+    font-size: 0.85em;
+    color: #FFF;
+    background-color: #0074a0;
+}
+table.listing th.header a:link {
+    font-size: 1.0em;
+    color: #FFF;
+    text-decoration: none;
+}
+table.listing th.header a:link {
+    width:200px;
+    font-size: 1.2em;
+    color: #fff;
+    text-decoration: none;
+}
+table.listing th.header a:visited {
+    color: #fff;
+}
+table.listing th.header a:hover {
+    color:#B6DB20;
+}
+
+
+/* Changes: canvi data i prioritat, import/export */
+
+#changes {
+    width: 98%;
+    margin: 5px;
+    padding: 2px 3px 2px 3px;
+    display: inline-table;
+    background-color: #fff;
+}
+#marca_tots,#canvia_prioritat, #canvia_estimacio {
+    float: left;
+    margin-right: 20px;
+}
+
+#import_export {
+    width: 98%;
+    margin: 5px;
+    padding: 2px 3px 2px 3px;
+    display: inline-table;
+    background-color: #fff;
+}
+#import_export > span {
+    float:left;
+    padding-left: 5px;
+}
+
+#import_div,#export_div {
+    float: left;
+    padding-left: 15px;
+}
+
+/* Finestra Options */
+
+#sbox-curtina {
+    width: /*1263*/1600px;
+    height: /*1589*/2000px;
+    top:0;
+    left:0;
+    position: fixed;
+    display: none; 
+
+    background-color:#000;
+    z-index: 0;
+    opacity: 0.7;
+}
+#parameters {
+    height:350px;
+    width:400px;
+    top:20px;
+    left:250px;
+    position: absolute;
+    z-index: -1;
+}
+#sbox-window {
+    position:absolute;
+    background-color:#FFFFFF;
+    border-radius: 3px;
+    padding:10px;
+    text-align:left;
+    display: none;
+/*    overflow:visible;*/
+    z-index: 1;
+}
+#sbox-window.shadow {
+    -webkit-box-shadow:rgba(0, 0, 0, 0.701961) 0 0 10px;
+    box-shadow:rgba(0, 0, 0, 0.701961) 0 0 10px;
+}
+a#sbox-btn-close {
+    height:30px;
+    width:30px;
+    right:-15px;
+    top:-15px;
+    position:absolute;
+    border:none;
+    background:  url(../images/closebox.png) 50% no-repeat;
+}
+#optionsDiv {
+    height:380px;
+    width:400px;
+    position:relative;
+  /*  top:169px;
+    left:184px;*/
+}   

@@ -1,0 +1,209 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+    <link rel="stylesheet" href="css/licenses.css"/>
+
+    <p>
+        <a href='main.php?pg=mant&amp;tb=machines&amp;mode={{mode}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;model={{model}}&amp;location={{location}}&amp;name={{name_f}}&amp;tm={{tm}}'> Enrere </a>
+    </p>
+
+    <div id="title_lic">Llicències instal·lades a {{machineName}}</div>
+    <div id="licenses_list">
+        {# machine_apps_sublist.html.twig' #}
+    </div>
+
+    <div id="addedit_license">
+        <div id="title">Afegir Llicència</div>
+        <div class="fila">Aplicacio:<span id="name">{{listboxofapps|raw}}</span></div>
+        <div class="fila">
+            Data d'instal·lació: <input type="text" id="date" class="date" value="{{data_avui}}"/>
+            Instalada? <input type="checkbox" name="inst" id="inst"/>
+        </div>
+        <div class="fila">
+            Comentaris:
+            <textarea id="comm" rows="1" cols="45"></textarea>
+        </div>
+        <div id="button">
+            <input type="button" value="Afegir" id="btnAddLicense" class="addupdatebutton"/>
+        </div>
+        <input id="today" type="hidden" value="{{data_avui}}"/>      
+    </div>
+
+    <div id="clone_machines"> 
+        <div id="title"> Clonar Llicències de Màquina </div>
+        <div id="resultatClonat">
+        </div>
+            <div id="machines_span">
+                {% embed "machines_search.html.twig" %}
+                    {% block machines_search %}
+                        Some content 
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        <div id="btnClone">
+            <!--  Button to CLONE Licenses to the selected Machines  -->
+            <input type='button' id='btnClone' 
+                   accept=""value='Clonar Instal·lació' 
+                   onclick='return confirm("Voleu clonar la instal·lació d aplicacions?");'/>
+        </div>
+    </div>
+
+
+    <script>
+        //Una vegada carregada la pàgina, crido AJAX per a que carregui per AJAX les incidències.
+        $( document ).ready(function() {
+            //Executa la cridada AJAX per les apps instal·lades en aquesta màquina
+            loadXMLDoc('licenses_list', 
+            'main.php?pg=ajax&file=machine_apps_sublistX&tb={{tb}}&id={{id}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&model={{model}}&location={{location}}&tm={{tm}}');
+            //Executa la cridada AJAX per a mostrar el contingut del llistat
+            loadXMLDoc('licenses_list', 
+            'main.php?pg=ajax&file=machine_apps_sublistX&tb={{tb}}&id={{id}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&model={{model}}&location={{location}}&tm={{tm}}');
+        });
+        
+        
+        
+
+        //Afegir una nova Llicència
+        $('#add_lic span').click (function(e) {
+            $('#addedit_license').show('slide',{direction:'right'},500);      
+        });
+        
+        //Esborrar llicència
+        $('.delLicense').click (function(e) {
+            //El paràmetre es l'id del botó, o sigui, la App a esborrar
+            Elimina_llicencia($(this).attr('id'));
+        });
+
+        //Add a License to this Machine
+        $('.addupdatebutton').click( function(e) {
+            Afegeix_o_modifica_llicencia( ($(this).attr('id')==='btnAddLicense') ? 'add'  : 'mod' );
+        });
+        
+        //Filtra les màquines segons criteri de selecció
+        $("#btnFilterMachines").click ( function() {
+            //var machine = document.getElementById('machine').value;
+            var machine  =  $('#camp_maquina').find('#machine').val();
+            var location =  $('#camp_ubicacio').find('#fkey_location').val();        
+            loadXMLDoc('machines_select', 
+                'main.php?pg=ajax&file=machines_selectX&mach='+machine+'&loc='+location);
+            //Mostra el div amb les màquines trobades
+            $("#machines_select").show();
+        });
+
+
+        //Les llicències instal·lades en la màquina actual s'instal·laran igual a les màquines triades.
+        //esborrant-ne les llicències que hi pogués haver instal·lades anteriorment.
+        $('#btnClone').click ( function() {
+            var pcs = '';
+            var nexe = '';
+            $('#machines_select').children('span').children('input').each( function() {
+               //Esta marcada la màquina 
+                if ($(this).is(':checked')) {
+                    pcs += nexe + $(this).val();
+                    if (nexe==='')  nexe='$';
+                }
+            });       
+            f = 'main.php?pg=ajax&file=machine_apps_cloningX&id={{id}}&pcs='+pcs;
+            //Ajax mitjançant JQUERY
+            $.ajax({
+                type: "GET",  url: f,  async: true,
+                success : function(resultat) {
+                    $('#resultatClonat').html(resultat);
+                }
+            });
+        });
+
+    //Codi JAVASCRIPT que és desactivat dp de AJAX 
+    $(document).ajaxComplete(function()
+    { 
+        //Add a License to this Machine
+        $('.addedit').click( function(e) {
+           Afegeix_o_modifica_llicencia( ($(this).attr('id')==='btnAddLicense') ? 'add'  : 'mod' ); 
+        });
+        
+        
+        //Editar Llicència
+        $('.editLicense').click (function (e) {
+                         
+            
+            //Get the values
+            var id = $(this).attr('id');
+
+            var name      = $("#"+id + " .name").html();
+            var installed = $("#"+id + " .installed").val();
+            var date      = $("#"+id + " .date").html();
+            var comment   = $("#"+id + " .comment").html();
+            
+            
+            
+            //Modify the Subform "Afegir Llicència"
+            $("#addedit_license #title").html("Editar Llicència");
+            //Add a hidden field that supplies the id of the app when doing the
+            //Ajax call to php file that does the modification
+            $("#addedit_license #name").html(name+'<input type="hidden" id="app" value="'+id+'"/>');
+            $("#addedit_license #date").val(date);
+            $("#addedit_license #comm").val(comment);
+            if (checked = "No")
+                $("#addedit_license #date").attr('checked', false);
+            else
+                $("#addedit_license #date").attr('checked', true);
+            //Modify the button caption and action
+             $("#addedit_license #btnAddLicense").val("Editar");
+             $("#addedit_license #btnAddLicense").attr('id','btnEditLicense');            
+        });
+        
+        
+         //Esborrar llicència
+        $('.delLicense').click (function(e) {
+            //El paràmetre es l'id del botó, o sigui, la App a esborrar
+            Elimina_llicencia($(this).attr('id'));
+        });
+
+    });
+
+
+    function Afegeix_o_modifica_llicencia(tipus) {
+            if ($('#app').val()=="") {
+                alert('Heu de seleccionar una aplicació');
+                return false;
+            }
+            //Afegir Llicència
+            var inst = ($('#inst').is(':checked')) ? 1 : 0;
+            var div = 'licenses_list';
+            f = 'main.php?pg=ajax&file=machine_apps_sublistX&f='+tipus+'&id={{id}}';
+            f += '&app='+$('#app').val();
+            f += '&date='+$('#date').val();
+            f += '&comm='+encodeURIComponent($('#comm').val());  //xxxtoni s'han de formatar els signes raros, mirar Fenix
+            f += '&inst='+inst;
+            //Ajax mitjançant JQUERY - async=false perquè vull esperar a acabar per amagar persiana.
+            $.ajax({ type: "GET", url: f, async: false,
+                success : function(resultat) {
+                    $("#"+'licenses_list').html(resultat);
+                }
+            });
+/*            
+            //Fa net els camps, si és després d'haver afegit un camp
+            if ($(this).attr('id')==='btnAddLicense') {
+                $('#app').val('');
+                $('#date').val( $('#today').val() );
+                $('#comm').val('');
+             }
+*/                
+
+    }
+
+    function Elimina_llicencia(app) {
+            if (confirm("Segur que voleu eliminar aquesta llicència?")) {
+                //Ajax mitjançant JQUERY
+                $.ajax({ type: "GET", 
+                    url: 'main.php?pg=ajax&file=machine_apps_sublistX&f=del&id={{id}}&app='+app,
+                    async: true,
+                    success : function(resultat) {
+                        $("#"+'licenses_list').html(resultat);
+                    }
+                });
+            }    
+    }
+    </script>
+{% endblock %}

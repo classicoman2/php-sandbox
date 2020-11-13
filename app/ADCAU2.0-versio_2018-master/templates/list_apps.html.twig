@@ -1,0 +1,110 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+
+    <fieldset id="toolbar">
+        <div id="toolbar_div">
+            <table class="toolbar">
+                <tr><td id="title">Aplicacions</td>
+                    <!-- FILTER name -->       
+                    <td class="text">
+                        <span class="label">Nom:</span>
+                        <input id="name_f" value="{{name_f}}" type="text"/>
+                    </td> 
+                    <!--  Show/Hide Columns   -->
+                    <td><button id="btnOptions">Opcions</button></td>
+                    <!--  Delete N Rows -->
+                    <td><button id="btnDelete">Esborra</button></td>
+                    <!-- New -->
+                    <td>
+                        <button onclick="window.location='main.php?pg=addedit&tb={{tb}}&id=0&name={{name_f}}'">
+                            Afegeix
+                        </button>
+                    </td>  
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+
+    <div id="div_rows">   
+        {# list_appsX.html.twig #}
+    </div>
+
+    <div id="changes">
+        <div id="marca_tots">
+            <input type="checkbox" id="selectAll_btn"/>
+            Marca Tots
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        <script src="js/listings.js"></script>
+    {% endblock %}
+    <script>
+       //Una vegada carregada la pàgina, crido AJAX per a que carregui per AJAX les incidències.
+       $( document ).ready(function() {
+            //Executa la cridada AJAX per a mostrar el contingut del llistat
+            loadXMLDoc('div_rows', 
+            'main.php?pg=ajax&file=list_appsX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}');
+       });
+        
+        // ON ENTER keyup in FILTER FIELDS
+        $('#name_f').keyup( function(e) 
+        {
+            if (e.keyCode == 13)
+                filtraApps('div_rows', 
+                'main.php?pg=ajax&file=list_appsX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}');
+        });
+
+
+        $('#btnOptions').click( function(e)   {   
+            obreFinestraOptions('{{tb}}');   
+        });
+       // Close OPTIONS WINDOW and Filter the rows
+       $('#sbox-btn-close').click( function(e) {
+           tancaFinestraOptions('main.php?pg=ajax&file=list_appsX&tb={{tb}}&mode={{mode}}&order={{order}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name_f}}&tm={{tm}}'); 
+       });  
+
+
+       /* Executes the Filtering of fields */
+       function filtraApps(div,f)
+       {    
+           try {
+               var name_f = document.getElementById('name_f').value;
+           } catch(e) {
+               alert("filtraApps(): Falta paràmetre");
+           }
+           //Add Filtering Parameter: Location
+           if ( (name_f !== "") || (name_f) )          f += "&name=" + name_f;
+
+           //Ajax mitjançant JQUERY
+           $.ajax({
+               type: "GET",  url: f,  async: true,
+               success : function(resultat) {
+                   $("#"+div).html(resultat);
+               }
+           });
+       }
+
+     // ON Change Num of Rows
+    $('#max').change ( function(e) {
+        var max = document.getElementById('max').value;
+        filtraApps('div_rows',
+            'main.php?pg=ajax&file=list_appsX&tb={{tb}}&order={{order}}&first=0&max='+
+                    max+'&name={{name_f}}');
+    });
+
+    //Codi JAVASCRIPT que és desactivat dp de AJAX 
+    $(document).ajaxComplete(function()
+    { 
+        // ON Change Num of Rows
+        $('#max').change ( function(e) {
+            var max = document.getElementById('max').value;
+            filtraApps('div_rows', 
+                'main.php?pg=ajax&file=list_appsX&tb={{tb}}&order={{order}}&first=0&max='+
+                        max+'&name={{name_f}}');
+        });
+    });
+    </script>
+{% endblock %}

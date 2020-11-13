@@ -1,0 +1,146 @@
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:600);*/
+
+
+
+/* Menu CSS */ 
+
+#cssmenu {
+    width: 100%;
+    margin-right: 10px;
+}
+
+#cssmenu, #cssmenu > ul{	
+	background: url(images/highlight-bg.png) repeat;
+	padding-bottom: 3px;
+}
+
+#cssmenu:before, #cssmenu:after, #cssmenu > ul:before, #cssmenu > ul:after {
+	content: '';
+	display: table;
+}
+
+
+#cssmenu:after, #cssmenu > ul:after {
+	clear: both;
+}
+
+#cssmenu > ul{
+	background: url(images/menu-bg.png) repeat;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+
+#cssmenu > ul li{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#cssmenu > ul > li{
+	float: left;
+	position: relative;
+	
+}
+#cssmenu > ul > li> a:hover {
+    font-weight: bold;
+}
+
+#cssmenu > ul > li > a{
+	padding: 10px 20px;  /* I've narrowed the menu height'*/
+	display: block;
+	color: white;
+	text-decoration: none;
+/*	text-transform: uppercase;      I took off uppercase, I prefer lowercase*/
+	text-shadow: 0 -1px 0 #c28130;
+	text-shadow: 0 -1px 0 rgba(151, 99, 33, .43);
+	line-height: 8px;  
+        font-weight: bold;
+}
+
+
+#cssmenu > ul > li:hover > a{
+	background: url(images/hover.png) repeat;
+}
+
+#cssmenu > ul > li > a > span{
+	line-height: 8px;	
+}
+
+#cssmenu > ul > li.active > a, #cssmenu > ul > li > a:active{
+
+	background: url(images/highlight-bg.png) repeat;	
+}
+
+
+
+/* Childs */
+
+#cssmenu > ul ul{
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	top: 120px;
+	background: url(images/hover.png) repeat;
+	margin: 0;
+	padding: 0;
+	z-index: -1;
+	-webkit-transition: all .25s .2s ease-in-out;
+	-moz-transition: all .25s .2s ease-in-out;
+	-ms-transition: all .25s .2s ease-in-out;
+	transition: all .25s .2s ease-in-out;	
+}
+
+#cssmenu > ul li:hover ul{
+	opacity: 1;
+	visibility: visible;
+	margin: 0;
+	color: #000;
+	z-index: 2;
+	top:27px;  /*xtoni - Distància de top de primera rajola de submenu respecte de la corresponent rajola de menu principal de la que es deriva o cau el submenu */
+	left: 0;	
+}
+
+#cssmenu > ul ul:before{
+	content: '';
+	position: absolute;
+	top: -10px;
+	width: 100%;
+	height: 10px;
+	background: transparent;	
+}
+
+
+#cssmenu > ul ul li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;	
+}
+
+#cssmenu > ul ul li a {
+        /* I've narrowed the menu items, horizontally and vertically */
+	padding: 10px 26px;
+	display: block;
+	color: white;
+	text-decoration: none;
+/*	text-transform: uppercase;      I took off uppercase, I prefer lowercase*/
+	width: 120px;
+	border-left: 4px solid transparent;
+	-webkit-transition: all .35s ease-in-out;
+	-moz-transition: all .35s ease-in-out;
+	-ms-transition: all .35s ease-in-out;
+	transition: all .35s ease-in-out;
+	text-shadow: 0 -1px 0 #c28130;
+	text-shadow: 0 -1px 0 rgba(151, 99, 33, .43);
+}
+
+#cssmenu > ul ul li a:hover{
+	border-left: 4px solid #055988;
+	background: url(images/highlight-bg.png) repeat;
+}
+
+#cssmenu > ul ul li a:active{
+	background: url(images/menu-bg.png) repeat;
+}

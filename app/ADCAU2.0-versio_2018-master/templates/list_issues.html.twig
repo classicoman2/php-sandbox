@@ -1,0 +1,217 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+    
+    <fieldset id="toolbar">
+        <div id="toolbar_div">
+            <table class="toolbar">
+                <tr>
+                    <td id="title">Incidències</td>
+                    <!-- FILTER name, desc -->       
+                    <td class="text">
+                        <span class="label">{{nameLabel}}:</span>
+                        <input id="name" value="{{name_f}}" type="text"/>
+                    </td> 
+                    <td>
+                        <span class="label">{{descLabel}}:</span>
+                        <input id="desc" value="{{desc_f}}" type="text"/>
+                    </td>
+                    <td>
+                        <button type="button" id="filter_btn">Filtrar</button> 
+                    </td>
+                    <td class="listbox">
+                        <table>
+                            <tr>
+                                <td>
+                                    {% autoescape %}
+                                        {{ listboxoftags|raw }} {# var won't be escaped #}
+                                    {% endautoescape %}
+                                </td>
+                            </tr>
+                        </table>
+                    </td> 
+                    <!--  Show/Hide Columns   -->
+                    <td><button id="btnOptions">Opcions</button></td>
+                    <!--  Delete N Rows -->
+                    <td><button id="btnDelete">Esborra</button></td>
+                    <!-- New -->
+                    <td><button id="btnAfegeix">Afegeix</button></td>  
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+
+    <div id="div_rows">
+        <!-- Aqui ve el contingut del llistat, q se genera per AJAX 
+            No crec que la primera vegada sigui la forma mes eficient de generar-lo,
+            però per al programador és la més còmoda -->
+    </div>
+
+    <!-- Bottom of Issues Template -->
+    <div id="changes">
+        <div id="marca_tots">
+            <input type="checkbox" id="selectAll_btn"/>
+            Marca Tots
+        </div>
+        <div id="canvia_prioritat">
+            <!-- Change Selected Priorities on selected Issues -->
+            <b>Prioritat</b>
+            {% autoescape %}
+                {{ listboxofprioritats|raw }} {# var won't be escaped #}
+            {% endautoescape %}
+            <button id="btn_change_priority">Canvia</button>
+        </div>
+        <div id="canvia_estimacio">
+            <b><?php echo printFieldLabel("date_estimated") ?></b>
+            <input type="text" id="set_dest" name="set_dest" class="date"/>
+            <button id="btn_change_date_est">Canvia</button>    
+        </div>
+    </div>
+
+    <!-- IMPORT & EXPORT -->
+    <div id="import_export">
+        <span><b>Import/Export:</b></span>
+        <div id="export_div">
+            <input type="button" name="Exportar" id="Exportar" value="Exportar en fitxer"
+                   onclick="window.location='controllers/_functs.php?f=exp'+'&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;tb={{tb}}'; "/>
+        </div>
+        <div id="import_div">
+            <form enctype="multipart/form-data" method="post"
+                  action="controllers/_functs.php?f=imp&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;tb={{tb}}&amp;state={{state}}">
+                <input type='file' name='fitxer'/>
+                <input type='submit' name='Importar' id='Importar' value='Importar'/>
+            </form>
+        </div>
+    </div>
+
+    
+    {% block javascripts %}
+        <script src="js/listings.js"></script>
+    {% endblock %}
+    <script>     
+       //Una vegada carregada la pàgina, crido AJAX per a que carregui per AJAX les incidències.
+       $( document ).ready(function() {
+            //Executa la cridada AJAX per a mostrar el contingut del llistat
+            filterRows('div_rows', 
+            'main.php?pg=ajax&file=list_issuesX&order={{order}}&first={{first}}&max={{max}}&tb={{tb}}&state={{state}}');
+       });
+        
+
+        // ON ENTER keyup in FILTER FIELDS
+        $('#name, #desc').keyup( function(e) 
+        {
+            if (e.keyCode === 13)
+                filterRows('div_rows', 
+            'main.php?pg=ajax&file=list_issuesX&tb=issues&order={{order}}&first={{first}}&max={{max}}&state={{state}}');
+        });
+
+        // ON CLICK Filter Button
+        $('#filter_btn').click( function(e) {
+            filterRows('div_rows',
+            'main.php?pg=ajax&file=list_issuesX&tb=issues&order={{order}}&first={{first}}&max={{max}}&state={{state}}');
+        });
+
+        // ON Change SELECT Tag
+        $('#tag_join').change ( function(e)
+        {
+            filterRows('div_rows',
+            'main.php?pg=ajax&file=list_issuesX&tb=issues&order={{order}}&first={{first}}&max={{max}}&state={{state}}');
+        });
+
+        // Open  OPTIONS WINDOW
+        $('#btnOptions').click( function(e)   {   
+            obreFinestraOptions('{{tb}}');
+        });
+        // Close OPTIONS WINDOW and Filter the rows
+        $('#sbox-btn-close').click( function(e) { 
+            tancaFinestraOptions('main.php?pg=ajax&file=list_issuesX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name}}&desc={{desc}}&state={{state}}');
+        });
+
+
+        $('#btnAfegeix').click( function() {
+           window.location='main.php?tb=issues&pg=addedit&id=0&order={{order}}&first={{first}}&max={{max}}&name={{name}}&desc={{desc}}&state={{state}}'; 
+        });
+
+
+        // ON CHANGE Priority
+        $('#btn_change_priority').click( function(e)  {   
+            updatePriorities();    
+        });
+
+        //On CHANGE date_estimated
+        $('#btn_change_date_est').click( function(e)  {   
+            updateDateEstimated(); 
+        });
+
+
+        // ON Change Num of Rows
+        $('#max').change ( function(e) {
+          filterRows('div_rows', 'main.php?pg=ajax&file=list_issuesX&tb={{tb}}&order={{order}}&first=0&max='+document.getElementById('max').value+'&name={{name}}&desc={{desc}}&state={{state}}');
+        });
+
+
+        //Codi JAVASCRIPT que és desactivat dp de AJAX 
+        $(document).ajaxComplete(function()
+        { 
+            // ON Change Num of Rows
+          $('#max').change ( function(e) {
+              filterRows('div_rows', 'main.php?pg=ajax&file=list_issuesX&tb={{tb}}&order={{order}}&first=0&max='+document.getElementById('max').value+'&name={{name}}&desc={{desc}}&state={{state}}');
+          });
+
+        });
+
+
+        /* Executes the Filtering of fields */
+       function filterRows(div,f)
+       {       
+           try {
+               var name = document.getElementById('name').value;
+               var desc = document.getElementById('desc').value;
+               var tag =  document.getElementById('tag_join').value;
+           } catch(e) {
+               alert("filterRows() a fitxer list_issues.html.twig: Falten paràmetres");
+           }
+
+           //Add Filtering Parameter: NAME
+           if ( (name !== "") || (name) )   f += "&name=" + name;
+           //Add Filtering Parameter: DESC
+           if ( (desc !== "") || (desc) )   f += "&desc=" + desc;
+           //Add Filtering Parameter: TAG    
+           if ( tag !== "" )                f += "&tag=" + tag;        
+
+           //Ajax mitjançant JQUERY
+           $.ajax({
+               type: "GET",
+               url: f,
+               async: true,
+               success : function(resultat) {
+                   $("#"+div).html(resultat);
+               }
+           });
+       }
+
+       // Detect in which rows the priority must be changed and do it.
+       function updatePriorities()  {
+           //Si s'ha seleccionat un valor de Priority
+           if (document.getElementById('fkey_prioritat').value) {
+               //Change the action of the Form and Submit it
+               var set_pr = document.getElementById('fkey_prioritat').value;
+               var formAction = 'controllers/_functs.php?f=updN&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&state={{state}}&set_pr='+set_pr;   
+               document.getElementById('listForm').action = formAction;
+               document.getElementById('listForm').submit();
+           }
+       }
+
+       // Detect in which rows the estimated date must be changed and do it.
+       function updateDateEstimated()  {    
+           if (document.getElementById('set_dest').value) {
+               //Change the action of the Form and Submit it
+               var set_dest = document.getElementById('set_dest').value;
+               var formAction = 'controllers/_functs.php?f=updN&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&state={{state}}&set_dest='+set_dest;
+               document.getElementById('listForm').action = formAction;
+               document.getElementById('listForm').submit();
+           }
+       }
+    </script>
+{% endblock %}

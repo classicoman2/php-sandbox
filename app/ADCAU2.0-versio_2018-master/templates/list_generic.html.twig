@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+
+    <fieldset id="toolbar">
+        <div id="toolbar_div">
+            <table class="toolbar">
+                <tr>
+                    <td id="title"><?php echo $pageName ?></td>
+                    <!-- FILTER name, desc -->       
+                    <td class="text">
+                        <span class="label">{{nameLabel}}</span>
+                        <input id="name" value="{{name_f}}" type="text"/>
+                    </td> 
+                    <td>
+                        <span class="label">{{descLabel}}</span>
+                        <input id="desc" value="{{desc_f}}" type="text"/>
+                    </td>
+                    <td>
+                        <button type="button" id="filter_btn">Filtrar</button> 
+                    </td>
+                    <!--  Show/Hide Columns   -->
+                    <td><button id="btnOptions">Opcions</button></td>
+                    <!--  Delete N Rows -->
+                    <td><button id="btnDelete">Esborra</button></td>
+                    <!-- New -->
+                    <td>
+                        <button onclick="window.location='main.php?tb={{tb}}&pg=addedit&id=0'">
+                            Afegeix
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+    <!--   Print the Rows  -->
+    <div id="div_rows">
+        {#  list_genericX.html.twig #}
+    </div>
+    <div id="changes">
+        <div id="marca_tots">
+            <input type="checkbox" id="selectAll_btn"/>
+            Marca Tots
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        <script src="js/listings.js"></script>
+    {% endblock %}
+    <script>
+       //Una vegada carregada la pàgina...
+       $( document ).ready(function() {
+            //Executa la cridada AJAX per a mostrar el contingut del llistat
+            loadXMLDoc('div_rows', 
+            'main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&desc={{desc_f}}');
+       });
+
+        $('#filter_btn').click( function(e) {
+            //Get filter values
+            name = $("#name").val();
+            desc = $("#desc").val();
+            loadXMLDoc('div_rows', 
+              'main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name='+name+'&desc='+desc);        
+        });
+        //  Detect ENTER keyup in the Name Filter field or LOCATION
+        $('#name, #desc').keyup( function(e)  {
+            if (e.keyCode == 13)
+            loadXMLDoc('div_rows', 
+              'main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name='+name+'&desc='+desc);        
+        });
+
+
+        // Open  OPTIONS WINDOW
+        $('#btnOptions').click( function(e)   {   
+            obreFinestraOptions('{{tb}}');   
+        });        
+        // Close OPTIONS WINDOW and Filter the rows
+        $('#sbox-btn-close').click( function(e) { 
+            tancaFinestraOptions('main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&desc={{desc_f}}');
+        });
+
+         // ON Change Num of Rows
+        $('#max').change ( function(e) {
+            loadXMLDoc('div_rows', 'main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max='+document.getElementById('max').value+'&name={{name_f}}&desc={{desc_f}}');
+        });
+
+        //Codi JAVASCRIPT que és desactivat dp de AJAX 
+        $(document).ajaxComplete(function()
+        { 
+            // ON Change Num of Rows
+          $('#max').change ( function(e) {
+                loadXMLDoc('div_rows', 'main.php?pg=ajax&file=list_genericX&tb={{tb}}&order={{order}}&first={{first}}&max='+document.getElementById('max').value+'&name={{name_f}}&desc={{desc_f}}');
+          });
+        }); 
+    </script>
+{% endblock %}

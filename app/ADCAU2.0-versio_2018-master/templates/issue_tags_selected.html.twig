@@ -1,0 +1,6 @@
+{# Print the list of TAGS attached to the  issue  #}
+{% for row in selectedTags %}
+    <span class="tag" id="{{row.tag}}">
+        {{row.tag}}<a href="#">x</a>
+    </span>
+{% endfor %}

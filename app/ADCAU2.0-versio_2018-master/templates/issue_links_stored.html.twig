@@ -1,0 +1,8 @@
+<!-- Print the LINKS of the ISSUE -->
+<div id="label">Enllaços relacionats:</div>
+{% for row in storedLinks %}
+    <span>
+        <a href="{{row.url}}">{{row.name}}</a>
+    </span>
+    <span class="link" id="{{row.id}}"><a href="#">x</a></span>
+{% endfor %}

@@ -1,0 +1,132 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/listings.css"/>
+
+    <fieldset id="toolbar">
+        <div id="toolbar_div">
+            <table class="toolbar">
+                <tr><td id="title">Màquines</td>
+                    <!-- FILTER name -->       
+                    <td class="text">
+                        <span class="label">Nom:</span>
+                        <input id="name" value="{{name_f}}" type="text"/>
+                    </td> 
+                    <!--   Filtering by MODEL   -->
+                    <td class="listbox">
+                        <table><tr><td>
+                        <!-- Print the listbox of models -->
+                        {{listboxofmodels|raw}}
+                        </td></tr></table>       
+                    </td>
+                    <!--   Filtering by LOCATION   -->
+                    <td class="listbox">
+                        <table><tr><td>
+                        <!-- Print the listbox of locations -->
+                        {{listboxoflocations|raw}}
+                        </td></tr></table> 
+                    </td>
+                    <!--  Show/Hide Columns   -->
+                    <td><button id="btnOptions">Opcions</button></td>
+                    <!--  Delete N Rows -->
+                    <td><button id="btnDelete">Esborra</button></td>
+                    <!-- New -->
+                    <td>
+                        <button onclick="window.location='main.php?pg=addedit&tb={{tb}}&id=0&tm={{tm}}'">
+                            Afegeix
+                        </button>
+                    </td>  
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+
+    <div id="div_rows">   
+        {# list_machinesX.html.twig #}
+    </div>
+
+    <div id="changes">
+        <div id="marca_tots">
+            <input type="checkbox" id="selectAll_btn"/>
+            Marca Tots
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        <script src="js/listings.js"></script>
+    {% endblock %}
+    <script>
+       //Una vegada carregada la pàgina, crido AJAX per a que carregui per AJAX les incidències.
+       $( document ).ready(function() {
+            //Executa la cridada AJAX per a mostrar el contingut del llistat
+            loadXMLDoc('div_rows', 
+            'main.php?pg=ajax&file=list_machinesX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&model={{model}}&location={{location}}&tm={{tm}}');
+       });
+        
+        // ON ENTER keyup in FILTER FIELDS
+        $('#name').keyup( function(e) 
+        {
+            if (e.keyCode == 13)
+                filterRows('div_rows', 'main.php?pg=ajax&file=list_machinesX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&tm={{tm}}');
+        });
+
+        //Detect Change Value on SELECT Location, Model
+        $('#fkey_location, #fkey_model').change ( function(e)
+        {
+            filterRows('div_rows', 'main.php?pg=ajax&file=list_machinesX&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&tm={{tm}}');
+        });
+
+
+        $('#btnOptions').click( function(e)   {   
+            obreFinestraOptions('{{tb}}');   
+        });
+       // Close OPTIONS WINDOW and Filter the rows
+       $('#sbox-btn-close').click( function(e) {
+           tancaFinestraOptions('main.php?pg=ajax&file=list_machinesX&tb={{tb}}&mode={{mode}}&order={{order}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name_f}}&tm={{tm}}'); 
+       });  
+
+
+       /* Executes the Filtering of fields */
+       function filterRows(div,f)
+       {    
+           try {
+               var name     = document.getElementById('name').value;
+               var model    = document.getElementById('fkey_model').value;
+               var location = document.getElementById('fkey_location').value;
+           } catch(e) {
+               alert("filterRows() a fitxer machines.php: Falta paràmetre");
+           }
+
+           //Add Filtering Parameter: Location
+           if ( (name !== "") || (name) )          f += "&name=" + name;
+           //Add Filtering Parameter: Location
+           if ( (model !== "") || (model) )        f += "&model=" + model;
+           //Add Filtering Parameter: Location
+           if ( (location !== "") || (location) )  f += "&location=" + location;
+
+           //Ajax mitjançant JQUERY
+           $.ajax({
+               type: "GET",  url: f,  async: true,
+               success : function(resultat) {
+                   $("#"+div).html(resultat);
+               }
+           });
+       }
+
+     // ON Change Num of Rows
+    $('#max').change ( function(e) {
+        var max = document.getElementById('max').value;
+        filterRows('div_rows', 'main.php?pg=ajax&file=list_machinesX&tb={{tb}}&order={{order}}&first=0&max=' + max + '&model={{model}}&location={{location}}&name={{name_f}}&tm={{tm}}');
+    });
+
+    //Codi JAVASCRIPT que és desactivat dp de AJAX 
+    $(document).ajaxComplete(function()
+    { 
+        // ON Change Num of Rows
+        $('#max').change ( function(e) {
+            filterRows('div_rows', 'main.php?pg=ajax&file=list_machinesX&tb={{tb}}&order={{order}}&first=0&max='+document.getElementById('max').value+'&model={{model}}&location={{location}}&name={{name_f}}&tm={{tm}}');
+        });
+    });
+    </script>
+{% endblock %}

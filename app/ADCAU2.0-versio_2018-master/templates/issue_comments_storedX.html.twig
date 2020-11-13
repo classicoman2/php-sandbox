@@ -1,0 +1,9 @@
+{% for row in commentsStored %}
+    <div class="{{ (row.username=="admin") ? "row_admin" : "row_user" }}>  
+        <div class="header">
+            <div class="username">{{row.username}}</div>
+            <div class="hour">{{row.date}}, {{row.hour}}</div>
+        </div>
+        <div class="text">{{row.description|raw}}</div>
+    </div>
+{% endfor %}

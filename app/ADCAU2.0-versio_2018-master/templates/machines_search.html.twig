@@ -1,0 +1,22 @@
+{% block search_machines %}
+    <!--This field contains the number of machines selected-->
+    <input type="hidden" id='numMachines' value='{{numMachines}}'/>
+    <div id="cerca_maquines">
+        <div id="label">Cerca la Màquina</div>
+        <!-- Filtering by Machine name (text) -->
+        <div id="camp_maquina">
+            Màquina:<input id="machine" type="text"/>
+        </div>
+        <!-- Filtering by Location -->
+        <div id="camp_ubicacio">
+            Ubicació:{{listboxoflocations|raw}}
+            <input id="btnFilterMachines" type="button" value="Filtra"/>
+        </div>
+    </div>
+    <!-- <div> where the MACHINE links are going to be put  -->
+    <div id="machines_select">
+        {# machines_selectX.html.twig #}
+    </div>
+    
+    <input type="button" id="btn_add_machines" value="Add Machines" />
+{% endblock %}

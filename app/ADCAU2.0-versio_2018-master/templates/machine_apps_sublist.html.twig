@@ -1,0 +1,34 @@
+<table class="listing">
+    <thead>
+        <tr>
+            <th class="header">#</th>
+            <th class="header">Aplicació</th>
+            <th class="header">Instal·lat?</th>
+            <th class="header">Data Instal·lació</th>
+            <th class="header">Comentaris</th>
+            <th></th><th></th>
+        </tr>
+    </thead>	
+    <tbody>
+{% for fila in files %}           
+        <tr id="{{fila.appid}}">
+            <td class="checkbox">
+                <input type="checkbox" name="check_list[]" value="{{fila.appid}}"/>
+                {{loop.index}}
+            </td>
+            <td class="name">{{fila.appname}}</td>
+            <td class="installed centered">{{fila.inst}}</td>
+            <td class="date centered">{{fila.date}}</td>
+            <td class="comment">{{fila.comm}}</td>
+            <td class="button">
+                <img id="{{fila.appid}}" class="editLicense" 
+                     src="images/edit.jpg" alt="Edit Register"/>
+            </td>
+            <td class="button">
+                <img id="{{fila.appid}}" class="delLicense" 
+                     src="images/delete.gif" alt="Delete Register"/>
+            </td>
+        </tr>
+{% endfor %}         
+    </tbody>
+</table>

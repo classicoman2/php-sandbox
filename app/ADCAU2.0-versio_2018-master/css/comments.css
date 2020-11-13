@@ -1,0 +1,109 @@
+/*Comments*/
+
+#issues_comments_box {
+    width: 100%;
+}
+
+#issues_comments {
+    background-color: #96BBD2;
+    padding: 4px 0 4px 0;
+}
+
+#label {
+    margin: 4px;
+    text-align: center;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+    background-color: #c8c8c8;
+}
+#comments_stored {
+    padding: 3px;
+    max-height: 300px;
+    overflow-y: scroll; /* scroll vertical var */
+}
+
+.comments_date {
+    width: 100%;
+    text-align: center;
+}
+.comments_date span {
+    background-color: #fff;
+    padding: 1px 3px 1px 3px;
+    border-radius: 4px;
+}
+
+.row_admin, .row_user {
+    border-radius: 5px;
+}
+.row_admin {
+    margin: 5px  30px  5px  5px;
+    padding: 3px 5px 4px 5px;
+    font-size: 0.9em;
+    background-color: #fff;
+}
+.row_user {
+    margin: 5px  5px  5px  30px;
+    background-color: #d3e992;
+    padding: 2px 5px 4px 5px;
+    font-size: 0.9em;
+}
+
+.header {
+    width: 100%;
+    height: 20px;
+    padding-bottom: 5px;
+    
+    font-size: 1.1em;
+}
+.username {
+    width: 50%;
+    float: left;
+    
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.hour {
+    width: 50%;
+    text-align: right;
+    float: left;
+    color: #15BBD5;
+}
+.text {
+    width: 100%;
+    height: 20px;
+    display: inline;
+    color:#555;
+}
+
+
+#add_comment {
+    width: 100%;
+    display:inline-block;
+    padding: 5px 0 5px 2px;
+    background-color: #C8C8C8;
+}
+#textarea {
+    width: 82%; /* Calculat per a 320px  -  xxxtoni */
+    float:left;
+    padding-left: 10px;
+}
+#add_comment textarea {
+    font-size: 1em;
+    width: 100%;
+    font-family: Verdana; /*Si no ho poso aquí, no agafa la de main.css */
+}
+
+
+
+#sendBtn {
+    height: 50px;
+    width: 50px;
+    float:right;
+        
+    background: url("../images/6_social_send_now.png") no-repeat left top;
+    padding-right: 5px;
+}
+#sendBtn:hover {
+    background-image: url("../images/6_social_send_now2.png");    
+}

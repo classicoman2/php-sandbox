@@ -1,0 +1,98 @@
+<div id="listing_header">
+    <div id="pageName"><i>{{pageName}}</i></div>
+    <div id="row_navigator">
+        <div id="prev_and_next">
+        <!-- First MAX_ROWS registers --> 
+            <div id="first_registers" style="cursor: pointer;" class="{{first!=0 ? "active" : "disabled" }}"
+                 onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&order={{order}}&first=0&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}'; ">
+            Principi</div>
+                 
+            <div id="prev_registers" style="cursor: pointer;" class="{{first!=0 ? "active" : "disabled" }}"
+                   onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&order={{order}}&first={{first-max}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}'; ">
+            Previs</div>
+            <!-- Next MAX_ROWS registers --> 
+            <div id="next_registers" style="cursor: pointer;" class="{{ ((first+max) < totalFiles ) ? "active" : "disabled" }}"
+                   onclick="window.location='main.php?pg=mant&amp;tb={{tb}}&order={{order}}&first={{first+max}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}'; ">
+            Pròxs.</div>
+        </div>
+        <div id="num_of_rows">{{totalFiles}} màquines</div>
+    </div>
+    <div class="count_registers">
+        <select id="max">
+            <option value="5"  {{ (max==5) ? "selected=\"selected\"" : "" }}>5</option>
+            <option value="10" {{ (max==10) ? "selected=\"selected\"" : "" }}>10</option>
+            <option value="15" {{ (max==15) ? "selected=\"selected\"" : "" }}>15</option>
+            <option value="20" {{ (max==20) ? "selected=\"selected\"" : "" }}>20</option>
+        </select>
+    </div>
+</div>
+
+
+<!-- PRINT FORM AND ROWS -->
+
+<!-- VIEWER --><!-- Rows -->
+<form enctype="multipart/form-data" id="listForm" method="post"
+      action="controllers/_functs.php?f=delN&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name}}&tm={{tm}}">
+    <table class="listing">
+        
+<!-- PRINT THE HEADER with the Fields to show -->
+        <thead>
+          <tr>
+                <th colspan='2'></th>
+{% for field in fieldsToShow %}      
+                <th class="header">
+                   <a href="main.php?pg=mant&tb={{tb}}&order={{field}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}">
+                      {{field}}
+                   </a>
+                </th>
+{% endfor %}
+                <th colspan="2"></th>
+{% if ( (tm=='PC') or (tm=='PO') ) %}
+                <th></th>
+{% endif %}
+          </tr>
+        </thead>
+        
+<!-- PRINT ROWS -->
+        <tbody>
+{% for row in rows %}   
+            <tr>
+                <td class='numeracio'> {{first + loop.index}} </td>
+                <td class="checkbox">
+                  <!-- 'name' property used for the form, 'id' property used for javascript -->
+                  <input type="checkbox" name="check_list[]" 
+                         id="check_list{{loop.index0}}" 
+                         value={{row.id}}/>
+                </td>
+                <!-- PRINT ONE ROW  -->
+            {% for field in fieldsToShow %}              
+                <td class="{{fieldsClasses[field]}}">
+                    {{row[field]}}
+                </td>
+            {% endfor %}
+                </td>
+                <!--  EDIT issue -->  
+                <td class="edit">
+                    <a href="main.php?pg=addedit&amp;tb={{tb}}&id={{row.id}}&order={{order}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}">
+                      <img src="images/edit.jpg" alt="Edit Register"/>
+                    </a>
+                </td>
+                <!--  DELETE issue  -->
+                <td class="delete">
+                    <a href="controllers/_functs.php?f=del&amp;tb={{tb}}&id={{row.id}}&order={{order}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}" 
+                       onclick="return confirm('Are you sure?');">
+                        <img src='images/delete.gif' alt='Edit Register'/>
+                    </a>
+                </td>
+{% if ( (tm=='PC') or (tm=='PO') ) %}
+                <td>
+                  <a href="main.php?pg=machine_apps&amp;id={{row.id}}&order={{order}}&first={{first}}&max={{max}}&model={{model}}&location={{location}}&name={{name}}&tm={{tm}}">
+                      Licenses
+                  </a>
+                </td>
+{% endif %}
+            </tr>
+{% endfor %}
+        </tbody>        
+    </table>
+</form>

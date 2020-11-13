@@ -1,0 +1,293 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <link rel="stylesheet" href="css/addedit.css"/>
+    <link rel="stylesheet" href="css/comments.css"/>
+
+    <div id="back">
+        <a href="main.php?pg=mant&amp;id=0&amp;tb={{tb}}&amp;order={{order}}&amp;first={{first}}&amp;max={{max}}&amp;name={{name_f}}&amp;desc={{desc_f}}">Enrere</a>
+    </div>
+    <div class="subleft">
+        <div class="title">
+     {{ (id) ? "Editar Incidència" : "Nova Incidència" }} 
+        </div>
+        <div class="row">
+            <div class="label">Prioritat:</div>
+            <div class="field">
+               {{listboxdeprioritats|raw}}
+            </div>
+            <div class="label">Previsió:</div>
+            <div class="field">
+                <input type="text" id="date_estimated" name="date_estimated" class="date"
+                       value="{{date_estimated}}"/>
+            </div>
+            <div class="label">Hora:</div>
+            <div class="field">
+                <input class="short" id="hour_estimated" name="hour_estimated"
+                       value="{{hour_estimated}}"/> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="label">Nom:</div>
+        </div>
+        <div class="row">
+                <input class="longname" type="text" id="name" autofocus="autofocus"
+                       value="{{name}}"/> 
+        </div>
+        <div class="row">
+            <div class="label">Descripció:</div>
+        </div>
+        <div class="row">
+            <textarea id="descripcio" class="desc" 
+                      rows="4" cols="51">{{descripcio}}</textarea>
+        </div>
+        <div class="row">
+            <div class="label">Inici:</div>
+            <div class="field">
+                <input type="text" id="date_start" name="date_start" class="date"
+                       value="{{date_start}}"/>
+            </div>
+            <div class="label">Final:</div>
+            <div class="field">
+                <input type="text" id="date_end" class="date"
+                       value="{{date_end}}"/>
+            </div>
+            <div class="label">Fet?:</div>
+            <div class="field">
+                <input type="checkbox" id="fkey_state" {{checked_html}} />
+            </div>     
+        </div>
+        <div class="row">
+            <div class="label">Ubicació:</div>
+            <div class="field">
+                {{listboxdeubicacions|raw}}
+            </div>
+            <div class="label">Incidencia creada per:</div><strong>{{username}}</strong>
+        </div>
+        <div class="row buttons">
+            <button id="btnSaveAndClose" class="form">Guarda i Tanca</button>                 
+            <button id="btnUpdate" class="form">Actualitza</button>                 
+            <button id="btnOneMore" class="form">+ 1</button>
+        </div>    
+        
+        <div id="updating"><p>Actualitzant...</p></div>
+    </div>
+    <div class="subright">
+          <div class="rightwrapper">
+
+    <!-- Tags to attach to this Issue -->
+            <div id="issues_tags_box">
+                <!--  List of Tags linked to the Issue  -->
+                <div id="issues_tags">
+                    <div id="label"><b>Etiquetes:</b></div>
+                    <div id="issue_tags_selected"><!-- Aqui van els tags seleccionats per a la issue --></div>
+                </div>
+                <div id="tags_all"><!-- Aqui es pinten tots els tags --></div>
+                <div id="newtag">
+                    <input type="text" value="" id="newtag_js" maxlength="12"/>
+                    <input type="button" value="Add Tag" id="btnAddTag"/>
+                </div>
+            </div>
+    <!-- Machines to attach to this Issue -->
+                <div id="machines_wrapper">
+                    <div id="issue_machines_selected">
+            <!-- issue_machines_selectedX.html.twig -->  
+                    </div>
+                    <div id="machines_span">
+                        {% embed "machines_search.html.twig" %}
+                            {% block machines_search %}
+                                Some content 
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                </div>
+          </div>
+    </div>
+    <!-- Links attached to this Issue -->
+        <div id="links_box">
+            <div id="stored_links">
+            <!-- issue_links_stored.html.twig  -->
+            </div>
+            <div id="new_link">
+                <table>
+                  <tr>
+                    <td>Nom:</td>
+                    <td colspan="2">Enllaç:</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="text" value="" id="link_name" width="50"/>
+                    </td><td>
+                      <input type="text" value="" id="url" width="200"/>
+                    </td><td>
+                      <input type="button" id="btnAddLink"     value="Add Link" />
+                      <input type="button" id="btnDeleteLinks" value="Esborrar Tots">
+                    </td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+    <div id="issues_comments_box">
+        <div id="issues_comments">
+            <div id="label"><b>Comments:</b></div>
+            <div id="comments_stored">
+                <!-- 'issue_comments_storedX.html.twig' -->  
+            </div>
+        </div>
+        <!-- Add a comment Button -->
+        <div id="add_comment">
+            <div id="textarea"><textarea id="comment_js"></textarea></div>    
+            <div id="sendBtn"></div>
+        </div>
+    </div>
+
+    {% block javascripts %}
+        <script src="js/addedit.js"></script>
+    {% endblock %}
+    <script>
+       //Una vegada carregada la pàgina, crido AJAX per a que carregui els subformularis.
+       $( document ).ready(function() {
+           //Tags
+            loadXMLDoc('issue_tags_selected','main.php?pg=ajax&file=issue_tags_selectedX&issue={{id}}');
+            loadXMLDoc('tags_all','main.php?pg=ajax&file=tags_allX&issue={{id}}');
+           //Machines
+            loadXMLDoc('issue_machines_selected','main.php?pg=ajax&file=issue_machines_selectedX&issue={{id}}');
+            //Links stored
+            loadXMLDoc('stored_links','main.php?pg=ajax&file=issue_links_storedX&issue={{id}}'); 
+            //Comments stored
+            loadXMLDoc('stored_links','main.php?pg=ajax&file=issue_comments_storedX&issue={{id}}'); 
+       });
+
+
+
+        //Guarda i Tanca
+        $('#btnSaveAndClose').click( function() {
+            //Executa Ajax de forma sincrona
+            loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key={{id}}&order={{order}}&first={{first}}&max={{max}}&name_f={{name_f}}&desc={{desc_f}}&state={{state}}','{{tableCols}}','{{username}}'); 
+            //Torna al  llistat (l'enllaç és igual que el del botó "Enrere")
+            window.location="main.php?pg=mant&id=0&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name={{name_f}}&desc={{desc_f}}"; 
+        });
+
+        //Actualitza
+        $('#btnUpdate').click( function() {
+            loadXMLgenericAddedit('nodiv','main.php?pg=ajax&file=saveX&tb={{tb}}&key={{id}}&order={{order}}&first={{first}}&max={{max}}&name_f={{name_f}}&desc={{desc_f}}&state={{state}}','{{tableCols}}','{{username}}'); 
+        });
+
+        //+1
+        $('#btnOneMore').click( function() {
+            window.location='main.php?pg=addedit&id=0&tb={{tb}}&order={{order}}&first={{first}}&max={{max}}&name_f={{name_f}}&desc={{desc_f}}&state={{state}}'; 
+        });
+
+
+        //Create a New Tag
+        $('#btnAddTag').click ( function() {
+            //He de forçar la sincronia entre les 2 instruccions segents -> async=false¨a la 1a
+            var newtag = document.getElementById('newtag_js').value;               
+            loadXMLDoc('issue_tags_selected',
+                'main.php?pg=ajax&file=issue_tags_selectedX&op=NEW&issue={{id}}&op=NEW&tag='+newtag,
+                '',false);
+            loadXMLDoc('tags_all',
+                'main.php?pg=ajax&file=tags_allX&issue={{id}}');
+        });
+
+        //Filtra les màquines segons criteri de selecció
+        $("#btnFilterMachines").click ( function() {
+            //var machine = document.getElementById('machine').value;
+            var machine  =  $('#camp_maquina').find('#machine').val();
+            var location =  $('#camp_ubicacio').find('#fkey_location').val();        
+            loadXMLDoc('machines_select', 
+                'main.php?pg=ajax&file=machines_selectX&mach='+machine+'&loc='+location);
+            //Mostra el div amb les màquines trobades
+            $("#machines_select").show();
+        });
+
+        //Add MACHINES to an ISSUE.
+        $('#btn_add_machines').click( function(e) 
+        {
+            loadXMLDoc('issue_machines_selected','main.php?pg=ajax&file=issue_machines_selectedX&issue={{id}}&op=ADD', 'ADD');
+            $("#machines_select").hide(); //CSS property display <= none
+        });
+
+        //On clicking on the cross besides a Selected Tag (deleting it)
+        $('span.tag a').click( function() {
+            //Agafa el nom del tag i passa'l per paràmetre
+            esborraTagIActualitzaLlistes( $(this).parent().attr('id') );
+        });
+
+        //Add a New comment
+        $("#sendBtn").click( function(e)
+        {
+            var name = encodeURIComponent(document.getElementById('comment_js').value);
+            //xxtoni  substituir per ajax de jquery, per a simplificar.
+            loadXMLDoc('comments_stored','main.php?pg=ajax&file=issue_comments_storedX&op=NEW&issue={{id}}&member=3&name='+name);
+            document.getElementById('comment_js').value = '';
+        });
+
+        //Add a LINK to an ISSUE.
+        $("#btnAddLink").click( function() {
+            var link = document.getElementById('link_name').value;
+            var url  = document.getElementById('url').value; 
+            loadXMLDoc('stored_links','main.php?pg=ajax&file=issue_links_storedX&f=new&issue='+'{{id}}'+'&link='+link+'&url='+url);
+
+            //buidar formulari de nou link
+            $('#link_name').val('');
+            $('#url').val('');
+        });
+
+        //Elminar un LINK of an ISSUE
+         $('span.link a').click( function() {
+                esborraLinkIActualitzaLLista(link = $(this).parent().attr('id'));
+        });
+
+        //Delete all the LINKS
+        $("#btnDeleteLinks").click ( function(e) {
+            if (confirm('Voleu esborrar tots els enllaços?'))
+            {
+                loadXMLDoc('stored_links','main.php?pg=ajax&file=issue_links_storedX&f=del&issue={{id}}');
+            }
+        });
+
+        //Delete Machines linked to an Issue
+        $("#btnDeleteMachines").click ( function() {
+            if (confirm('Voleu eliminar les màquines d\'aquesta incidència?'))
+            {
+                loadXMLDoc('issue_machines_selected','main.php?pg=ajax&file=issue_machines_selectedX&issue={{id}}&op=CLEAR');
+            }
+        });
+
+
+    //Codi JAVASCRIPT que és desactivat dp de AJAX 
+    $(document).ajaxComplete(function() {
+            //On clicking on the cross besides a Selected Tag (deleting it)
+            $('span.tag a').click( function() {
+                //Agafa el nom del tag i passa'l per paràmetre
+                esborraTagIActualitzaLlistes( $(this).parent().attr('id') );
+            });
+            //Elminar un Link
+            $('span.link a').click( function() {
+                esborraLinkIActualitzaLLista(link = $(this).parent().attr('id'));
+            });
+
+            //Delete Machines linked to an Issue
+            $("#btnDeleteMachines").click ( function() {
+                if (confirm('Voleu eliminar les màquines d\'aquesta incidència?'))
+                {
+                    loadXMLDoc('issue_machines_selected','main.php?pg=ajax&file=issue_machines_selectedX&issue={{id}}&op=CLEAR');
+                }
+            });
+    });
+
+    function esborraTagIActualitzaLlistes(tag) {
+        //Elimina el tag i esborra'l al formulari
+        loadXMLDoc('issue_tags_selected','main.php?pg=ajax&file=issue_tags_selectedX&op=CLEAR&issue={{id}}&tag='+tag,'CLEAR',false);
+        //Actualitza la llista de tags, per si s'hagués d'esborrar d'aquesta
+        loadXMLDoc('tags_all','main.php?pg=ajax&file=tags_allX&issue={{id}}');  
+    }
+
+    function esborraLinkIActualitzaLLista(link) {
+        if (confirm('Voleu esborrar aquest enllaç?')) {
+            loadXMLDoc('stored_links','main.php?pg=ajax&file=issue_links_storedX&f=del1&issue={{id}}&link='+link);  
+        }
+    }
+    </script>
+{% endblock %}

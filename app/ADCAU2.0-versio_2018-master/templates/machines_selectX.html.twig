@@ -1,0 +1,12 @@
+{% for row in machinesFound %}
+    <!-- Echo first field with Checkboxes with name=check_list[] (for POST) and id = ch1 ch2 etc -->
+    <span><input type='checkbox' 
+                     id=ch{{loop.index0}}  
+                     name='check_list[]' 
+                     value='{{row.id}}'/>{{row.name}} ({{row.fkey_location}})</span>  
+        <input type='hidden' id='hid{{loop.index0}}' value='{{row.id}}'/>
+{% endfor %}
+        
+{% if numMachines > 0 %}
+    <p>No s'han trobat màquines</p>
+{% endif %}

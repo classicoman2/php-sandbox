@@ -1,0 +1,103 @@
+                                  ########
+                                  # BUGS # 
+                                  ########
+
+  * Hi ha un problema gros amb els formats de text a guardar a mySQL i a mostrar. Parametres a passar com
+    a $_GET, valors a guardar a la base de dades i despres mostrar als formularis. Trobar una fòrmula que
+    funcioni i implantar-la per tota l'aplicació, sense excepcions, per a acabar amb aquest problema per
+    sempre
+    Error de mostra: SC_LIST_ISSUES A la casella 'name', la " ' " me surt com a " &#039; "
+
+  * En anar a guardar algo mitjançant ajax, convertir els espais en %20%, en general codificar-ho
+    tot per evitar sorpreses. Repassar com se guarda tot a la base de dades, que no hi hagi
+    problemes en guardar i extreure dades.
+
+  * SC_ADDEDIT_GENERIC  Els links, quan pintats amb opcio |raw, mostren el javascript a pèl
+
+  * En editar una issue i canviar el camp <descripcio>, les cometes 'prova' se guarden com a &#039;
+
+  * El boto amb el text 'Add Machines' no ha d'aparéixer quan se troben maquines al
+    formulari SC_MACHINE_APPS
+
+  * Investigar els tipus de error 404, 500 etc que hi pot haver.. i mostrar-ho
+
+  * Seguretat: investigar els principals problemes que hi pot haver i implementar solucions, de mica en mica.
+  
+
+
+                                      ##################
+                                      # UPGRADES PDTS. #
+                                      ##################
+
+
+ - Hi ha d'haver un boto que se digui INSTALL a les files del llistat de APPS, que me permeti accedir a una pàgina
+   on pugui triar les màquines on vull instal·lar una aplicació, i amb un click instal·lar l'aplicació en totes les 
+   maquines triades.
+ 
+ - En editar una LLICENCIA, que no generi el Form de Editar la Llicencia amb AJAX sino que ho
+   modifiqui emprant JQUERY.
+
+
+     ------------------------------------------------------
+       Millores per a la VERSIÓ 2.1 (en 2015, segurament)
+     ------------------------------------------------------
+
+ - Eliminar (o inclús editar) comentaris a issues
+ - Configuració guardada d'una manera més elegant, per exemple fitxer INI, tal com 
+   descriu el llibre "Pro PHP MVC", Apress ed.
+ - Incorporar MEMCACHED per a guardar algunes consultes..
+
+ - Posar la part de Exportar en una opció específica de menú, on se pugui triar
+   la taula que volem exportar, el format, etc... (he llevat la opció a tots els
+   formularis excepte el de SC_ISSUES, perquè no ho empro!
+
+ - En els llistats, en pitjar principi, previs o proxs. que ho faci amb Ajax, no refresc de tota 
+   la pàgina.
+
+ - Generar PDFs, ex: llistat d'aplicacions instal·lades. CALDRÀ FER PROVES DURANT UNA TEMPORADA ABANS D'IMPLANTAR
+   UNA SOLUCIÓ A L'APLICACIÓ. El que + preocupa: SALTS DE PÀGINA, CAPÇALERES I PEUS DE PÀGINA.
+
+ - Detectar rutes amb la funció   preg_match_all()  
+
+ - Estudiar la possibilitat d'utilitzar HTTPS sense sobrecost.
+
+
+                                           ##########
+                                           # LO FET #
+                                           ##########
+
+        ==============================================
+        CANVIS A LA BASE DE DADES (PENDENTS ARA) xtoni
+        ==============================================
+
+        - Eliminar el camp 'previsio' de la taula 'issues'
+        - 
+
+
+        ==============
+        CANVIS AL CODI
+        ==============
+
+Març 14
+   - a SC_LIST_ISSUES he afegit JOIN per el nom del member
+
+Març 10
+   - TWIG per a generar templates i donar + aspecte MVC al programa
+   - SC_ADDEDIT_ISSUE afegit el member que ha creat la issue
+   - Button "Guardar i Tancar" a SC_ADDEDIT_ISSUES
+
+27 = En espitjar Esborrar en pantalles tipus llistat, no fa res si no he seleccionat cap camp.
+
+26 = He passat tots els fitxers dels controladors a classes de tipus NomclasseController.php
+
+     - SC_ADDEDIT_ISSUE - He eliminat la part de imatges, perquè no ho emprava.
+     El codi és recuperable des d'una còpia d'una versió antiga.
+
+12Feb = Amagar dades acces a BDD per a que no siguin visibles a Github
+      He creat un SINGLETON amb les dades de la BDD en local i en remot
+
+9 Feb =  Crear un nou model de generacio de plantilles emprant TWIG 
+      · Prova amb templates/addedit_generic_tpl
+      · Llevar _tpl del nom
+      · La plantilla s'ha de GENERAR DES DEL CODI DEL CONTROLADOR i no a dins main_tpl 
+        com fins ara

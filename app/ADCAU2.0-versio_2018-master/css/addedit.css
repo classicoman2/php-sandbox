@@ -1,0 +1,248 @@
+/*addedit.css*/
+#all {
+    width: 900px;
+}
+
+#back {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.subleft {
+    width: 500px;
+    position:relative;
+    float:left;
+    margin: 0 15px 0 4px;
+
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    padding: 3px;
+    border:1px solid #AAA;
+    /*overflow-y: scroll; /* scroll vertical var */
+}
+        
+.title {
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.6em;
+    text-align: left;
+    color: #fff;
+    background-color: #9b9fa0;
+}
+.row {
+    padding: 3px;
+    width:100%; 
+    display: inline-block;
+}
+
+.label {
+    width: auto;
+    float: left;
+    padding-top: 5px;
+    margin: 0 5px 0 4px;
+    font-weight: bold;
+    color: #9B9FA0;
+    text-align: right;
+}
+.field {
+    width: auto;
+    float: left;
+    padding-top: 3px;
+}
+
+
+.buttons { 
+    text-align: right;
+    padding-top: 20px;
+}
+
+input.longname {
+    width: 100%;   
+}
+input.short {
+    width: 45px;
+}
+input.date {
+    width: 80px;
+    text-align: right;
+}
+textarea.desc { 
+    font-size: 0.9em;
+    height: 100px;
+    width: 100%;
+}
+
+button.form {
+    padding: 12px 15px 12px 15px;
+}
+
+.subright { 
+    position:relative;
+    padding-left: 5px;
+    width: 380px;
+    float: left;
+}
+/* I need this wrapper to allow subleft to be floating to the left */
+.rightwrapper {
+    position: relative;
+}
+
+
+#add_image {
+    padding-top: 20px;
+}
+
+
+/**  MACHINES **/
+
+#machines_wrapper {
+    background-color: #F4F4F4;
+    border-radius: 5px 5px 5px 5px;
+    padding: 3px 3px 3px 3px;
+    margin: 25px 0 0 5px;
+    border:1px solid #AAA;
+}
+#machines_span {
+}
+#issue_machines_selected {
+    background-color: #F4F4F4;
+    display: inline-block;
+}
+#issue_machines_selected #label {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+#issue_machines_selected  span {
+    padding: 5px;
+}
+
+#machines_select {
+    font-size: 0.8em;
+    padding-top: 5px;
+    min-height: 20px;
+}
+
+#machines_select > span {
+    padding-bottom: 3px;
+    padding-right: 5px;
+    display: inline-block;
+}
+#cerca_maquines {
+    background-color: #fff;
+    margin: 3px;
+    padding: 5px;
+}
+#cerca_maquines #label {
+    font-weight: bold;
+    padding: 3px 0 10px 0;
+}
+#cerca_maquines #camp_maquina {
+    margin-left: 25px;
+    padding-bottom: 5px;
+}
+#cerca_maquines #ubicacio {
+    margin-left: 25px;
+}
+#btn_add_machines {
+   /* display:none;*/
+}
+
+
+
+
+/** TAGS  **/
+
+#issues_tags_box {
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 5px;
+    border:1px solid #AAA;
+}
+#issues_tags_box  #label, #issues_tags_box  #issue_tags_selected {
+    float: left;
+}
+
+#issues_tags {
+    display: inline-block;
+    width: 100%;
+}
+#issue_tags_selected {
+    background-color: #F4F4F4;
+    width: 100%;
+    display: inline-block;
+    padding: 3px 2px 3px 2px;
+}
+#issue_tags_selected span {
+    float: left;
+    margin-right: 5px;
+}
+#tags_all {
+    background-color: #EEEEEE;
+    padding: 3px 2px 3px 2px;
+    margin-top: 2px;
+    width: auto;
+    margin-bottom: 10px;
+}
+#tags_all > a {
+    margin: 7px;
+    font-size: 0.85em;
+}
+
+
+
+#links_box {
+    width: 100%;
+    background-color: #F4F4F4;
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+
+    display: inline-block;
+    
+    border-radius: 5px 5px 5px 5px;
+    margin-left: 5px;
+    border:1px solid #AAA;
+}
+
+
+
+
+#stored_links #label {
+    font-weight: bold;
+    padding: 3px;
+}
+#stored_links span {
+    font-weight: bold;
+}
+#new_link #url {
+    width: 400px;
+}
+
+span.del {
+    cursor: pointer;
+    font-size: 0.6em;
+}
+
+#issues_comments_box {
+    width: 100%;
+    display: inline-block;
+}
+
+
+
+/* Gif animat que se mostra mentre està guardant les dades a la BD */
+div#updating {
+    background:url(../images/ajax-loader.gif) no-repeat left; 
+    width:50px;
+    padding-left: 25px;
+    display:none;
+}
+
+
+#upload_wrapper {
+    background-color: #F4F4F4;
+    border-radius: 5px 5px 5px 5px;
+    padding: 3px 5px 3px 3px;
+    margin-left: 5px;
+    border:1px solid #AAA;
+}

@@ -1,0 +1,110 @@
+#licenses_list {
+    min-height: 350px;
+    float:left;
+    border-radius: 5px;
+    background-color: #F4F4F4;
+    margin: 0 5px 0 5px;
+}
+#title_lic {
+    width: 100%;
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 0 0 10px 20px;
+}
+
+table.listing {
+    padding: 5px 5px 5px 25px;
+
+}
+td {
+    background-color: #F4F4F4;
+    padding: 2px;
+    font-size: 0.8em;
+}
+td.button {
+    width: 25px;
+}
+td.button > img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+td.button > a:hover > img {
+    opacity: 0.5;
+}
+td.centered {
+    text-align: center;
+}
+td.checkbox { 
+    background-color:#9b9fa0;
+    width: 40px;
+    font-size: 0.6em;
+}
+th {
+    font-size: 0.85em;
+    color: #FFF;
+    background-color: #0074a0;
+}
+
+input.date {
+    width: 80px;
+    text-align: right;
+}
+
+
+#addedit_license, #clone_machines {
+    width: 420px;
+    float:left;
+    padding: 5px;
+    background-color: #F4F4F4;    
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+#addedit_license #title,#clone_machines  #title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+div.fila {
+    padding: 2px;
+}
+#date {
+    margin-right: 40px;
+}
+div#button {
+    text-align: right;
+}
+
+
+#cerca_maquines {
+    background-color: #fff;
+    margin: 3px;
+    padding: 5px;
+}
+#cerca_maquines #label {
+    font-weight: bold;
+    padding: 3px 0 10px 0;
+}
+#cerca_maquines #camp_maquina {
+    margin-left: 25px;
+    padding-bottom: 5px;
+}
+#cerca_maquines #ubicacio {
+    margin-left: 25px;
+}
+
+div#btnClone {
+    text-align: right;
+    padding-top: 10px;
+}
+
+#machines_select {
+    background-color: #fff;
+}
+#machines_select span {
+    display: inline-block;
+    padding-right: 5px;
+    font-size: 0.8em;
+    background-color: #D5D5D5;
+    margin: 2px;
+    font-family: Verdana;
+}

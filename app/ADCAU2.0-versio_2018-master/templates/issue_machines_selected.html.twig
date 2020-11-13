@@ -1,0 +1,8 @@
+<div id="label">Màquines afectades:</div>
+<div>
+    {% for row in storedMachines %}
+        <span class="tag">{{row.machine}}</span>
+    {% endfor %}
+    <!--   Clear MACHINES button   --> 
+    <input type="button" value="Esborra" id="btnDeleteMachines"/>
+</div>
