@@ -1,24 +1,22 @@
-## Servidor LAMP amb Docker per a proves PHP
+## Proves PHP per Skills
 
-https://hub.docker.com/r/mattrayner/lamp
+Preparatori per curs Skills (Nov 2020).
 
-Que he fet:
+En directori `/apps/` hi ha el codi PHP, que s'executa gràcies al servidor Servidor LAMP amb **Docker** que executat al directori. La imatge es troba aqui: https://hub.docker.com/r/mattrayner/lamp
 
-Primer de tot, seguint el tutorial,
+Per llençar una màquina basada en 18.04 i de passada crear el contenidor,
 
 # Launch a 18.04 based image
 docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804
 
---> En correr això, se me creen els directoris de feina que indica la documentació del hub de docker (enllaç inicial)
+I ja està. Per tornar a engegar la màquina, 
 
+    # sudo docker start nomdelcontenidor  // En el cas actual, `priceless_sanderson`
 
-# docker ps -a
+# Dades servidor:
 
-he trobat que la imatge se diu `happy cerf`
-
-Dades:
-
-Servidor:  		 localhost
-phpmyadmin -->   admin,  IUNzDJXK4bKJ
+- Carpeta codi:     `app`
+- Servidor:  		 localhost
+- phpmyadmin         localhost/phpmyadmin   (admin,  IUNzDJXK4bKJ)
 
 
