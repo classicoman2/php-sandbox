@@ -19,6 +19,6 @@ he trobat que la imatge se diu `happy cerf`
 Dades:
 
 Servidor:  		 localhost
-phpmyadmin -->   admin,  cUc9p4GQFqX9
+phpmyadmin -->   admin,  IUNzDJXK4bKJ
 
 
