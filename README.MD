@@ -2,28 +2,27 @@
 
 Preparatori per curs Skills (Nov 2020).
 
-En directori `/apps/` hi ha el codi PHP, que s'executa gràcies al servidor Servidor LAMP amb **Docker** que executat al directori. La imatge es troba aqui: https://hub.docker.com/r/mattrayner/lamp
+El directori públic és `/apps/`. Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp
 
-Per llençar una màquina basada en 18.04 i de passada crear el contenidor,
+Per llençar la màquina virtual basada en 18.04 i crear el contenidor,
 
-## Launch a 18.04 based image
-
+    ## Launch a 18.04 based image
     docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804
 
-I ja està. Per tornar a engegar la màquina, 
+Per tornar a engegar la màquina,
 
     sudo docker start nomdelcontenidor  // En el cas actual, `priceless_sanderson`
 
 ## Dades servidor:
 
-- Carpeta codi:     `app`
+- Carpeta codi:     `apps`
 - Servidor:  		 localhost
-- phpmyadmin         localhost/phpmyadmin   (admin,  IUNzDJXK4bKJ)
-
-
+- phpmyadmin         localhost/phpmyadmin   
+  - Accés local: admin -  IUNzDJXK4bKJ
+  
 ## Xdebug
 
-He hagut d'instal·lar XDebug en el servidor perquè en cas d'errors no mostrava res. 
+He hagut d'afegir XDebug, ja que en cas d'error no apareixia res al viewport del navegador. 
 
 Per instal·lar XDebug, inicia la maquina virtual i executa-la per poder accedir a dins,
 
