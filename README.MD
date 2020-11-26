@@ -49,6 +49,7 @@ A dins, copiar i aferrar la config de xdebug:
 
 La darrera línia és important, si no no mostrarà cap error. Per cert, aquesta opció és la més forçada, es pot afinar per a que mostri o no notices, warnings i errors, etc (per més endavant).
 
+
 ## Informació Branques
 
-A la branch disponible hi ha una versió d'un programa de gestió d'incidències creat amb MVC (2014).
+A una de les branches hi ha una versió d'un programa de gestió d'incidències creat amb MVC (2014).
