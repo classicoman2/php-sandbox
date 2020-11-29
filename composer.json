@@ -1,0 +1,12 @@
+{
+    "name": "toni/proves-skills-nov-2020",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Toni",
+            "email": "aamengual@cifpfbmoll.eu"
+        }
+    ],
+    "require": {}
+}

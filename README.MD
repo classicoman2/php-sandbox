@@ -15,21 +15,21 @@ Per tornar a engegar la màquina,
 
 ## Dades servidor:
 
-- Carpeta codi:     `apps`
-- Servidor:  		 localhost
-- phpmyadmin         localhost/phpmyadmin   
-  - Accés local: admin -  IUNzDJXK4bKJ
-  
+- Carpeta codi: `apps`
+- Servidor: localhost
+- phpmyadmin localhost/phpmyadmin
+  - Accés local: admin - IUNzDJXK4bKJ  (a portatil, l'usuari es 'root')
+
 ## Xdebug
 
-He hagut d'afegir XDebug, ja que en cas d'error no apareixia res al viewport del navegador. 
+He hagut d'afegir XDebug, ja que en cas d'error no apareixia res al viewport del navegador.
 
 Per instal·lar XDebug, inicia la maquina virtual i executa-la per poder accedir a dins,
 
     sudo docker start priceless_sanderson
     sudo docker exec -it priceless_sanderson /bin/bash
 
-Ja dins la màquina, he seguit [les instruccions](https://stackoverflow.com/questions/53133005/how-to-install-xdebug-on-ubuntu) 
+Ja dins la màquina, he seguit [les instruccions](https://stackoverflow.com/questions/53133005/how-to-install-xdebug-on-ubuntu)
 
     sudo apt install php-xdebug
     nano /etc/php/7.4/mods-available/xdebug.ini
@@ -49,9 +49,7 @@ A dins, copiar i aferrar la config de xdebug:
 
 La darrera línia és important, si no no mostrarà cap error. Per cert, aquesta opció és la més forçada, es pot afinar per a que mostri o no notices, warnings i errors, etc (per més endavant).
 
+
 ## Informació Branques
 
-A la branch disponible hi ha una versió d'un programa de gestió d'incidències creat amb MVC (2014).
-
-
-
+A una de les branches hi ha una versió d'un programa de gestió d'incidències creat amb MVC (2014).
