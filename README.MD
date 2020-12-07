@@ -1,27 +1,6 @@
-# REST API amb PHP
+# Proves PHP per Skills
 
-## Branches
-
-1.- branca `devRESTapi` conté la API REST en **PHP**
-2.- branca `vue-cli` conté els canvis en el front desenvolupat amb **Vue Cli**
-
-## Posar en marxa servidor
-
-    # Al portàtil és silly_torvalds
-    sudo docker start priceless_sanderson
-
-Dades accés:
-- Carpeta codi: `apps`
-- Servidor: localhost
-  - Web: http://localhost
-
-- Database:
-  - database name: `api_rest_php` (fitxer `.sql` a `/sql`)
-  - phpmyadmin: http://localhost/phpmyadmin
-    - User: admin ('root' al portatil)
-    - Password:  IUNzDJXK4bKJ  
-
-## Directori PHP
+Preparatori per curs Skills (Nov 2020).
 
 El directori públic és `/apps/`. Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp
 
@@ -33,6 +12,13 @@ Per llençar la màquina virtual basada en 18.04 i crear el contenidor,
 Per tornar a engegar la màquina,
 
     sudo docker start nomdelcontenidor  // En el cas actual, `priceless_sanderson`
+
+## Dades servidor:
+
+- Carpeta codi: `apps`
+- Servidor: localhost
+- phpmyadmin localhost/phpmyadmin
+  - Accés local: admin - IUNzDJXK4bKJ  (a portatil, l'usuari es 'root')
 
 ## Xdebug
 
