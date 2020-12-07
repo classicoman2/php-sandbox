@@ -11,7 +11,7 @@
     sudo docker start priceless_sanderson
 
 Dades accés:
-- Carpeta codi: `apps`
+- Carpeta codi: `app`
 - Servidor: localhost
   - Web: http://localhost
 
@@ -23,7 +23,7 @@ Dades accés:
 
 ## Directori PHP
 
-El directori públic és `/apps/`. Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp
+El directori públic és `/app/`. Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp
 
 Per llençar la màquina virtual basada en 18.04 i crear el contenidor,
 
