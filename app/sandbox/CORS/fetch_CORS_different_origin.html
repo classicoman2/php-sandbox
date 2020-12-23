@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova CORS</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    fetch("http://localhost/sandbox/CORS/dummy_json.php")
+      .then(function (response) {
+        if (response.ok) return response.json();
+        else 
+        throw new Error(response.status);
+      })
+      .then(function (json) {
+        console.log("El json retornat:", json);
+      })
+      .catch(function (error) {
+        console.log("This error happened: ", error.message);
+      });
+</script>
+
+</html>
