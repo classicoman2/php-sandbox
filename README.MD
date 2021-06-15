@@ -3,26 +3,28 @@
 El meu repositori amb projectes basats en PHP.
 
 ## Branques
-- `devRESTapi` conté la API REST en **PHP**
-- `vue-cli` conté els canvis en el front desenvolupat amb **Vue Cli**
+- `cyclists-api` is a API developed with PHP, MySql, Apache
+- `vue-cli` Front desenvolupat amb **Vue Cli**
 
 ## Start the server
 ```bash
-# Al PC
-docker start priceless_sanderson
-# Al portàtil
-docker start silly_torvalds
+docker start php-sandbox
 ```
 
 ## Access Data
 - Carpeta amb codi (directori public): `app`
 - Servidor: http://localhost
 - phpmyadmin: http://localhost/phpmyadmin
-  - User: admin ('root' al portatil)
-  - Password:  IUNzDJXK4bKJ  
+  - User: root
+  - Password:  syPv4JseWHh4  (el password es regenera cada vegada que es fa `docker run`)
 
-## API Rest
+## Cyclists API
 - Database name: `api_rest_php` (fitxer `.sql` a `/sql`)
+
+### API
+
+GET | All Cyclists | http://localhost/api/index.php?table=cyclists
+GET | Cyclist by ID | http://localhost/api/index.php?table=cyclists&id=1
 
 ## Installation & Run
 Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp (la màquina virtual basada en 18.04)
@@ -30,15 +32,7 @@ Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub
 Per llençar la mv:
 ```bash
 ## Launch a 18.04 based image
-docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804
-```
-
-Per tornar a engegar la màquina
-```bash
-# Al PC
-docker start priceless_sanderson
-# Al portàtil
-docker start silly_torvalds
+docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804 -name php-sandbox
 ```
 
 ## Xdebug

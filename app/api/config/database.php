@@ -4,8 +4,9 @@ class Database{
     // specify your own database credentials
     private $host = "localhost";
     private $db_name = "api_rest_php";
-    private $username =  "admin" /* "root"  */ ;  //xtoni  PORTATIL vs. FIXO
-    private $password = "IUNzDJXK4bKJ";
+
+    private $username =  "admin";   //portàtil
+    private $password = "syPv4JseWHh4";
     public $conn;
   
     // get the database connection

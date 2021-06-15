@@ -28,11 +28,16 @@ $conn = $database->getConnection();
 */
 
 if (isset($_GET['table'])) {
-  if ($_GET['table'] == 'clients') {
-
-
+  if ($_GET['table'] == 'cyclists') {
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
-      echo getClients($conn);
+
+      // 1 cyclist
+      if (isset($_GET['id'])) {
+        echo getCyclist($conn, $_GET['id']);
+      } else {
+        // All Cyclists
+        echo getCyclists($conn);
+      }
     }
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       echo createClient($conn);
@@ -40,12 +45,13 @@ if (isset($_GET['table'])) {
   }
 }
 
+/*
 if (isset($_GET['client'])) {
 
   $id = $_GET['client'];
 
   if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    echo getClient($conn, $id);
+    echo getCyclist($conn, $id);
   }
   if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
     echo deleteClient($conn, $id);
@@ -54,7 +60,7 @@ if (isset($_GET['client'])) {
     echo updateClient($conn, $id);
   }
 }
-
+*/
 
 function updateClient($conn, $id)
 {
@@ -198,16 +204,14 @@ function createClient($conn)
 
 
 
-function getClient($conn, $id)
+function getCyclist($conn, $id)
 {
-
   // required headers
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
 
-
   // prepare & execute query statement
-  $stmt = $conn->prepare("SELECT * FROM clients WHERE id=$id");
+  $stmt = $conn->prepare("SELECT * FROM cyclists WHERE id=$id");
   $stmt->execute();
 
   $num = $stmt->rowCount();;
@@ -219,16 +223,13 @@ function getClient($conn, $id)
     // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       // extract row
-      // this will make $row['name'] to
-      // just $name only, etc
+      // this will make $row['name'] to just $name only, etc
       // https://www.php.net/manual/en/function.extract.php
       extract($row);
 
       $client_item = array(
         "id" => $id,
-        "name" => $name,
-        "surname" => $surname,
-        "age" => $age
+        "name" => $name
       );
     }
 
@@ -250,7 +251,7 @@ function getClient($conn, $id)
 }
 
 
-function getClients($conn)
+function getCyclists($conn)
 {
 
   // required headers
@@ -259,7 +260,7 @@ function getClients($conn)
 
 
   // select all query
-  $query = "SELECT * FROM clients";
+  $query = "SELECT * FROM cyclists";
   // prepare query statement
   $stmt = $conn->prepare($query);
 
@@ -287,9 +288,7 @@ function getClients($conn)
 
       $client_item = array(
         "id" => $id,
-        "name" => $name,
-        "surname" => $surname,
-        "age" => $age
+        "name" => $name
       );
 
       array_push($clients_arr["records"], $client_item);
