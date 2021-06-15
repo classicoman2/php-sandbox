@@ -1,0 +1,23 @@
+{
+  "name": "php-sandbox",
+  "version": "1.0.0",
+  "description": "(Updated June/21) El meu repositori amb projectes basats en PHP.",
+  "main": "index.js",
+  "scripts": {
+    "toc": "markdown-toc -i README.MD"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/classicoman2/php-sandbox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/classicoman2/php-sandbox/issues"
+  },
+  "homepage": "https://github.com/classicoman2/php-sandbox#readme",
+  "devDependencies": {
+    "markdown-toc": "^1.2.0"
+  }
+}
