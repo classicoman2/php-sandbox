@@ -76,12 +76,11 @@ Last line is very important: without it, errors won't be shown. There are other 
 ## Cyclists API
 - Database name: `api_rest_php` (fitxer `.sql` a `/sql`)
 
+### Docs de la API (Postman Docs)
+[Clicar aqui](https://documenter.postman.com/preview/10224002-aa05469d-dacd-4b35-a1f2-d733851948c7?environment=&versionTag=latest&apiName=CURRENT&version=latest&documentationLayout=classic-double-column&right-sidebar=303030&top-bar=FFFFFF&highlight=EF5B25)
+
 ### TODO
 - [ ] afegir DELETE, PUT, PATCH, ....
 - [ ] Funcionen les Clean Urls si canvio el mètode GET per POST, etc..?
 - [ ] Fer un FRONT que accedeixi a la API i hi faci operacions !!!
 - [ ] Generate API Documentation: https://swagger.io/resources/articles/documenting-apis-with-swagger/
-
-### Routes
-* GET - All Cyclists - http://localhost/api/cyclists
-* GET - Cyclist by ID - http://localhost/api/cyclist/1
