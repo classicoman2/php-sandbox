@@ -80,8 +80,9 @@ Last line is very important: without it, errors won't be shown. There are other 
 ### TODO
 - [ ] afegir DELETE, PUT, PATCH, ....
 - [ ] Funcionen les Clean Urls si canvio el mètode GET per POST, etc..?
+- [ ] Fer un FRONT que accedeixi a la API i hi faci operacions !!!
+- [ ] Generate API Documentation: https://swagger.io/resources/articles/documenting-apis-with-swagger/
 
 ### Routes
-|---|---|---|
-| GET | All Cyclists | http://localhost/api/cyclists |
-| GET | Cyclist by ID | http://localhost/api/cyclist/1 |
+* GET - All Cyclists - http://localhost/api/cyclists
+* GET - Cyclist by ID - http://localhost/api/cyclist/1
