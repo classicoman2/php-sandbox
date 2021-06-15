@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
-  echo deleteClient($conn, $id);
+  if (isset($_GET['id'])) {
+    echo deleteCyclist($conn, $_GET['id']);
+  }
 }
 if ($_SERVER['REQUEST_METHOD'] === "PUT") {
   echo updateClient($conn, $id);
@@ -112,34 +114,26 @@ function updateClient($conn, $id)
   }
 }
 
-function deleteClient($conn, $id)
+function deleteCyclist($conn, $id)
 {
-  // required headers
-  header("Access-Control-Allow-Origin: *");
-  header("Content-Type: application/json; charset=UTF-8");
-  header("Access-Control-Allow-Methods: POST");
-  header("Access-Control-Max-Age: 3600");
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  set_required_headers();
 
   // prepare & execute query statement
-  $stmt = $conn->prepare("DELETE FROM `clients` WHERE `clients`.`id` = $id");
+  $stmt = $conn->prepare("DELETE FROM `cyclists` WHERE `cyclists`.`id` = $id");
   $result = $stmt->execute();
 
   if ($result) { // ha anat be
     // set response code - 200 ok
     http_response_code(200);
-
     // tell the user
-    echo json_encode(array("message" => "Client was deleted."));
+    echo json_encode(array("message" => "Cyclist was deleted."));
   }
-
   // if unable to delete the product
   else {
     // set response code - 503 service unavailable
     http_response_code(503);
-
     // tell the user
-    echo json_encode(array("message" => "Unable to delete client."));
+    echo json_encode(array("message" => "Unable to delete cyclist."));
   }
 }
 
@@ -159,7 +153,7 @@ function createCyclist($conn)
     $name = $data->name;
 
     // prepare & execute query statement
- //   $stmt = $conn->prepare("INSERT INTO cyclists (`name`,  `surname`, `age`) VALUES ('$name', '$surname', '$age')");
+    //   $stmt = $conn->prepare("INSERT INTO cyclists (`name`,  `surname`, `age`) VALUES ('$name', '$surname', '$age')");
     $stmt = $conn->prepare("INSERT INTO cyclists (`name`) VALUES ('$name')");
     $result = $stmt->execute();
 
