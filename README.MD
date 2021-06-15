@@ -82,5 +82,6 @@ Last line is very important: without it, errors won't be shown. There are other 
 - [ ] Funcionen les Clean Urls si canvio el mètode GET per POST, etc..?
 
 ### Routes
-GET | All Cyclists | http://localhost/api/cyclists
-GET | Cyclist by ID | http://localhost/api/cyclist/1
+|---|---|---|
+| GET | All Cyclists | http://localhost/api/cyclists |
+| GET | Cyclist by ID | http://localhost/api/cyclist/1 |
