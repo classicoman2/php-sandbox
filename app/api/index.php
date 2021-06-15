@@ -27,40 +27,37 @@ $conn = $database->getConnection();
   Follow similar URI design practices for other resources as well.
 */
 
-if (isset($_GET['table'])) {
-  if ($_GET['table'] == 'cyclists') {
-    if ($_SERVER['REQUEST_METHOD'] == "GET") {
-
-      // 1 cyclist
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+  if (isset($_GET['table'])) {
+    if ($_GET['table'] == 'cyclists') {
+      // GET cyclist by id
       if (isset($_GET['id'])) {
-        echo getCyclist($conn, $_GET['id']);
+        echo getCyclistById($conn, $_GET['id']);
+      }
+      // GET cyclist by name
+      else if (isset($_GET['name'])) {
+        // TODO  echo getCyclistByName($conn, $name)
       } else {
-        // All Cyclists
+        // GET cyclists
         echo getCyclists($conn);
       }
     }
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-      echo createClient($conn);
-    }
   }
 }
 
-/*
-if (isset($_GET['client'])) {
-
-  $id = $_GET['client'];
-
-  if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    echo getCyclist($conn, $id);
-  }
-  if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
-    echo deleteClient($conn, $id);
-  }
-  if ($_SERVER['REQUEST_METHOD'] == "PUT") {
-    echo updateClient($conn, $id);
-  }
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+  echo createClient($conn);
 }
-*/
+
+if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
+  echo deleteClient($conn, $id);
+}
+if ($_SERVER['REQUEST_METHOD'] === "PUT") {
+  echo updateClient($conn, $id);
+}
+
+
+
 
 function updateClient($conn, $id)
 {
@@ -170,7 +167,6 @@ function createClient($conn)
     $surname = $data->surname;
     $age = $data->age;
 
-
     // prepare & execute query statement
     $stmt = $conn->prepare("INSERT INTO clients (`name`,  `surname`, `age`) VALUES ('$name', '$surname', '$age')");
     $result = $stmt->execute();
@@ -182,10 +178,8 @@ function createClient($conn)
       // tell the user
       echo json_encode(array("message" => "Client was created."));
     }
-
     // if unable to create the product, tell the user
     else {
-
       // set response code - 503 service unavailable
       http_response_code(503);
 
@@ -193,10 +187,8 @@ function createClient($conn)
       echo json_encode(array("message" => $stmt->errorInfo()));
     }
   } else {
-
     // set response code - 400 bad request
     http_response_code(400);
-
     // tell the user
     echo json_encode(array("message" => "Unable to create product. Data is incomplete."));
   }
@@ -204,7 +196,7 @@ function createClient($conn)
 
 
 
-function getCyclist($conn, $id)
+function getCyclistById($conn, $id)
 {
   // required headers
   header("Access-Control-Allow-Origin: *");
@@ -213,11 +205,9 @@ function getCyclist($conn, $id)
   // prepare & execute query statement
   $stmt = $conn->prepare("SELECT * FROM cyclists WHERE id=$id");
   $stmt->execute();
-
   $num = $stmt->rowCount();;
 
   if ($num > 0) {
-
     // retrieve our table contents
     // fetch() is faster than fetchAll()
     // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
@@ -253,11 +243,9 @@ function getCyclist($conn, $id)
 
 function getCyclists($conn)
 {
-
   // required headers
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
-
 
   // select all query
   $query = "SELECT * FROM cyclists";
@@ -303,7 +291,6 @@ function getCyclists($conn)
 
   // no clients found will be here
   else {
-
     // set response code - 404 Not found
     http_response_code(404);
 
@@ -313,4 +300,3 @@ function getCyclists($conn)
     );
   }
 }
-/**   Fer l'operacio amb Base de Dades */
