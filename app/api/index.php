@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  echo createClient($conn);
+  echo createCyclist($conn);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
@@ -144,31 +144,23 @@ function deleteClient($conn, $id)
 }
 
 
-function createClient($conn)
+function createCyclist($conn)
 {
-  // required headers
-  header("Access-Control-Allow-Origin: *");
-  header("Content-Type: application/json; charset=UTF-8");
-  header("Access-Control-Allow-Methods: POST");
-  header("Access-Control-Max-Age: 3600");
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  set_required_headers();
 
-
-  // get posted data
+  // To access the entity body of a POST or PUT request (or any other HTTP method):
+  // https://stackoverflow.com/questions/8945879/how-to-get-body-of-a-post-in-php
   $data = json_decode(file_get_contents("php://input"));
 
   // make sure data is not empty
   if (
-    !empty($data->name) &&
-    !empty($data->surname) &&
-    !empty($data->age)
+    !empty($data->name)
   ) {
     $name = $data->name;
-    $surname = $data->surname;
-    $age = $data->age;
 
     // prepare & execute query statement
-    $stmt = $conn->prepare("INSERT INTO clients (`name`,  `surname`, `age`) VALUES ('$name', '$surname', '$age')");
+ //   $stmt = $conn->prepare("INSERT INTO cyclists (`name`,  `surname`, `age`) VALUES ('$name', '$surname', '$age')");
+    $stmt = $conn->prepare("INSERT INTO cyclists (`name`) VALUES ('$name')");
     $result = $stmt->execute();
 
     if ($result) { // ha anat be
@@ -176,7 +168,7 @@ function createClient($conn)
       http_response_code(201);
 
       // tell the user
-      echo json_encode(array("message" => "Client was created."));
+      echo json_encode(array("message" => "Cyclist was created."));
     }
     // if unable to create the product, tell the user
     else {
@@ -190,7 +182,7 @@ function createClient($conn)
     // set response code - 400 bad request
     http_response_code(400);
     // tell the user
-    echo json_encode(array("message" => "Unable to create product. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to create. Data is incomplete."));
   }
 }
 
@@ -299,4 +291,16 @@ function getCyclists($conn)
       array("message" => "No clients found.")
     );
   }
+}
+
+
+
+function set_required_headers()
+{
+  // required headers
+  header("Access-Control-Allow-Origin: *");
+  header("Content-Type: application/json; charset=UTF-8");
+  header("Access-Control-Allow-Methods: POST");
+  header("Access-Control-Max-Age: 3600");
+  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 }

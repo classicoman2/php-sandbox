@@ -18,8 +18,7 @@ El meu repositori amb projectes basats en PHP.
 
 ## Basic info
 ### Branques
-- `cyclists-api` is a (kind of) Rest API developed with PHP, MySql, Apache
-- `vue-cli` Front desenvolupat amb **Vue Cli**
+- `main` contains a (kind of) Rest API developed with PHP, MySql, Apache
 
 ### Start the server
 ```bash
