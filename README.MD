@@ -23,8 +23,8 @@ docker start php-sandbox
 
 ### API
 
-GET | All Cyclists | http://localhost/api/index.php?table=cyclists
-GET | Cyclist by ID | http://localhost/api/index.php?table=cyclists&id=1
+GET | All Cyclists | http://localhost/api/cyclists
+GET | Cyclist by ID | http://localhost/api/cyclist/1
 
 ## Installation & Run
 Apache, MySQL i PHP 7.4.8 a servidor LAMP amb **Docker** obtingut de https://hub.docker.com/r/mattrayner/lamp (la màquina virtual basada en 18.04)
