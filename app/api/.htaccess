@@ -2,5 +2,5 @@ RewriteEngine on
 
 ErrorDocument 404 /pagina-no-encontrada
 
-RewriteRule ^clients$ index.php?table=clients
+RewriteRule ^cyclists$ index.php?table=cyclists
 RewriteRule ^client/(\w*)$ index.php?client=$1

@@ -3,7 +3,7 @@
 El meu repositori amb projectes basats en PHP.
 
 ## Branques
-- `cyclists-api` is a API developed with PHP, MySql, Apache
+- `cyclists-api` is a (kind of) Rest API developed with PHP, MySql, Apache
 - `vue-cli` Front desenvolupat amb **Vue Cli**
 
 ## Start the server
@@ -15,7 +15,7 @@ docker start php-sandbox
 - Carpeta amb codi (directori public): `app`
 - Servidor: http://localhost
 - phpmyadmin: http://localhost/phpmyadmin
-  - User: root
+  - User: admin
   - Password:  syPv4JseWHh4  (el password es regenera cada vegada que es fa `docker run`)
 
 ## Cyclists API
@@ -36,7 +36,7 @@ docker run -p "80:80" -v ${PWD}/app:/app mattrayner/lamp:latest-1804 -name php-s
 ```
 
 ## Xdebug
-Istalled _XDebug_ in order to debug PHP code. Start the container and exec it to install xdebug:
+Installed _XDebug_ in order to debug PHP code. Start the container and exec it to install xdebug:
 
 ```bash
 docker start php-sandbox

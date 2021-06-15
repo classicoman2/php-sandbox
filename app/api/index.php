@@ -262,7 +262,7 @@ function getCyclists($conn)
 
     // clients array
     $clients_arr = array();
-    $clients_arr["records"] = array();
+    $clients_arr["cyclists"] = array();
 
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -279,7 +279,7 @@ function getCyclists($conn)
         "name" => $name
       );
 
-      array_push($clients_arr["records"], $client_item);
+      array_push($clients_arr["cyclists"], $client_item);
     }
 
     // set response code - 200 OK
