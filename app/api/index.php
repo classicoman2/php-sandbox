@@ -19,7 +19,6 @@ $conn = $database->getConnection();
 /*
   GET 	  /device-management/devices : Get all devices
   POST 	  /device-management/devices : Create a new device
-
   GET 	  /device-management/devices/{id} : Get the device information identified by "id"
   PUT 	  /device-management/devices/{id} : Update the device information identified by "id"
   DELETE  /device-management/devices/{id} : Delete device by "id"
@@ -54,50 +53,40 @@ if ($_SERVER['REQUEST_METHOD'] === "DELETE") {
     echo deleteCyclist($conn, $_GET['id']);
   }
 }
+
 if ($_SERVER['REQUEST_METHOD'] === "PUT") {
-  echo updateClient($conn, $id);
+  if (isset($_GET['id'])) {
+    echo updateCyclist($conn, $_GET['id']);
+  }
 }
 
 
 
 
-function updateClient($conn, $id)
+function updateCyclist($conn, $id)
 {
-  // required headers
-  header("Access-Control-Allow-Origin: *");
-  header("Content-Type: application/json; charset=UTF-8");
-  header("Access-Control-Allow-Methods: POST");
-  header("Access-Control-Max-Age: 3600");
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  set_required_headers();
 
-  // get posted data
+  // get data in the body
   $data = json_decode(file_get_contents("php://input"));
 
   // make sure data is not empty
-  if (
-    !empty($data->name) &&
-    !empty($data->surname) &&
-    !empty($data->age)
-  ) {
+  if (!empty($data->name)) {
     $name = $data->name;
-    $surname = $data->surname;
-    $age = $data->age;
 
     // prepare & execute query statement
-    $stmt = $conn->prepare("UPDATE `clients` SET `name`='$name',`surname`='$surname',`age`=$age WHERE `id`=$id");
+    $stmt = $conn->prepare("UPDATE `cyclists` SET `name`='$name' WHERE `id`=$id");
     $result = $stmt->execute();
 
     if ($result) { // ha anat be
       // set response code - 201 created
       http_response_code(201);
 
-      // tell the user
-      echo json_encode(array("message" => "Client was updated."));
+      // Response
+      echo json_encode(array("message" => "Cyclist was updated."));
     }
-
-    // if unable to create the product, tell the user
+    // Unable to create the product
     else {
-
       // set response code - 503 service unavailable
       http_response_code(503);
 
@@ -105,14 +94,13 @@ function updateClient($conn, $id)
       echo json_encode(array("message" => $stmt->errorInfo()));
     }
   } else {
-
     // set response code - 400 bad request
     http_response_code(400);
-
-    // tell the user
-    echo json_encode(array("message" => "Unable to update product. Data is incomplete."));
+    // Response
+    echo json_encode(array("message" => "Unable to update. Data is incomplete."));
   }
 }
+
 
 function deleteCyclist($conn, $id)
 {
