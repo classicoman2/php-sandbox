@@ -18,6 +18,7 @@ El meu repositori amb projectes basats en PHP.
 
 ## Basic info
 ### Branques
+- `dev-api` és la branca dev de la api rest de ciclistes i equips ciclistes (juny-21)
 - `main` contains a (kind of) Rest API developed with PHP, MySql, Apache
 
 ### Start the server
